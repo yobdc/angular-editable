@@ -38,10 +38,10 @@ directive('appVersion', ['version', function(version) {
 		replace: true,
 		scope: {
 			mode: '@',
-			output: '='
+			output: '=output'
 		},
 		transclude: true,
-		template: '<div><div ng-show="isEdit||mode==\'in\'" ng-transclude></div><div ng-show="mode==\'out\'||(mode==\'mix\'&&!isEdit)">output</div></div>',
+		template: '<div><div ng-show="isEdit||mode==\'in\'" ng-transclude></div><div ng-show="mode==\'out\'||(mode==\'mix\'&&!isEdit)">{{output}}</div></div>',
 		link: function(scope, iElement, iAttrs, controller) {
 			scope.out = $parse(iAttrs.output);
 			var locals = {};
