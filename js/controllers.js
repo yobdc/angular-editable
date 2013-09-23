@@ -17,6 +17,6 @@ controller('MyCtrl1', ['$scope', function($scope) {
 	};
 
 	$scope.show = function(){
-		alert($scope.product.name + ' ' + $scope.product.number);
+		alert($scope.product.name + ' ' + $scope.product.number + ' ' + $scope.address);
 	};
 }]);
