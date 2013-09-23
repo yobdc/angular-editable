@@ -41,11 +41,7 @@ directive('appVersion', ['version', function(version) {
 		},
 		// scope: true,
 		transclude: true,
-		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + 
-		'<div ng-show="!isEdit">{{output}}</div>' + 
-		'<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
-		'<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
-		'</div>',
+		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + '<div ng-show="!isEdit">{{output}}</div>' + '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + '<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + '</div>',
 		link: function(scope, iElement, iAttrs, controller) {
 			// scope.output = scope[iAttrs.output];
 			// scope.output = 1;
@@ -72,6 +68,7 @@ directive('appVersion', ['version', function(version) {
 			// } else {
 			// 	$scope.isEdit = false;
 			// };
+			var element = $element;
 			$element.bind('dblclick', function(event) {
 				if($scope.mode == 'mix') {
 					$scope.isEdit = true;
@@ -108,12 +105,16 @@ directive('appVersion', ['version', function(version) {
 
 			$scope.ok = function() {
 				$scope.isEdit = false;
-				$scope.$parent.$broadcast('ok');
+				$scope.$parent.$broadcast('ok', {
+					element: element
+				});
 			};
 
 			$scope.cancel = function() {
 				$scope.isEdit = false;
-				$scope.$parent.$broadcast('cancel');
+				$scope.$parent.$broadcast('cancel', {
+					element: element
+				});
 			};
 
 			if($scope.mode == 'in') {
@@ -133,20 +134,46 @@ directive('appVersion', ['version', function(version) {
 		},
 		controller: function($scope, $element, $attrs, $transclude) {
 			var scope = $scope;
+			scope.copy = {};
 			var attrs = $attrs;
+			var element = $element;
 			var copyAttr = function(des, src, attr) {
 					var list = attr.split('.');
 					des[list[0]] = angular.copy(src[list[0]]);
 				};
-			$element.bind('click', function(event) {
-				copyAttr(scope.$parent, scope, attrs.ngModel);
+			var searchEle = function(array, target) {
+					var result = false;
+					for(var i = 0; i < array.length; i++) {
+						if(array[i] == target) {
+							result = true;
+							break;
+						};
+						if( !! array[i].children.length) {
+							result = searchEle(array[i].children, target);
+							if(result) {
+								break;
+							};
+						};
+					};
+					return result;
+				};
+			copyAttr(scope.copy, scope, attrs.ngModel);
+			$element.bind('click', function(event, args) {
+				if(!!args && !!args.element && searchEle(args.element, element)) {
+					copyAttr(scope.$parent, scope, attrs.ngModel);
+				};
 			});
 			$scope.$on('ok', function(event, args) {
-				copyAttr(scope.$parent, scope, attrs.ngModel);
-				// scope.$parent.output = scope[attrs.ngModel];
+				if(!!args && !!args.element && searchEle(args.element, element)) {
+					var n = 0;
+					// copyAttr(scope.$parent, scope, attrs.ngModel);
+					// scope.$parent.output = scope[attrs.ngModel];
+				};
 			});
 			$scope.$on('cancel', function(event, args) {
-				copyAttr(scope, scope.$parent, attrs.ngModel);
+				if(!!args && !!args.element && searchEle(args.element, element)) {
+					copyAttr(scope.$parent, scope.copy, attrs.ngModel);
+				};
 				// scope[attrs.ngModel] = scope.$parent[attrs.ngModel];
 				// scope[attrs.ngModel] = scope.$parent.output;
 			});
