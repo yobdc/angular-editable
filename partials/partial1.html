@@ -1,4 +1,14 @@
-<editable mode="mix" output="address+'_'+address">
-    <input ng-model="address">
-    <input ng-model="address">
+<!-- <editable mode="in" output="address">
+    <input edit ng-model="address">
 </editable>
+<hr>
+<editable mode="out" output="address">
+    <input edit ng-model="address">
+</editable>
+<hr> -->
+<editable mode="mix" output="product.name+'_'+product.number">
+    <input edit ng-model="product.name">
+    <input edit ng-model="product.number">
+</editable>
+<hr>
+<button ng-click="show()">Show</button>
