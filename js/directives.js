@@ -3,36 +3,7 @@
 /* Directives */
 
 
-angular.module('myApp.directives', []).
-directive('appVersion', ['version', function(version) {
-	return function(scope, elm, attrs) {
-		elm.text(version);
-	};
-}]).directive('xeditable', function($timeout) {
-	return {
-		restrict: 'A',
-		require: "ngModel",
-		link: function(scope, element, attrs, ngModel) {
-			var loadXeditable = function() {
-					angular.element(element).editable({
-						display: function(value, srcData) {
-							ngModel.$setViewValue(value);
-							scope.$apply();
-						}
-					});
-				}
-			$timeout(function() {
-				loadXeditable();
-			}, 10);
-		}
-	};
-}).directive('ngBlur', function() {
-	return function(scope, elem, attrs) {
-		elem.bind('blur', function() {
-			scope.$apply(attrs.ngBlur);
-		});
-	};
-}).directive('editable', ['$parse', function($parse) {
+angular.module('myApp.directives', [])..directive('editable', ['$parse', function($parse) {
 	return {
 		priority: 1000,
 		restrict: 'E',
@@ -40,7 +11,6 @@ directive('appVersion', ['version', function(version) {
 		scope: {
 			output: '=output'
 		},
-		// scope: true,
 		transclude: true,
 		template: '<div>' + 
 		'<div ng-show="isEdit" ng-transclude></div>' + 
@@ -50,8 +20,6 @@ directive('appVersion', ['version', function(version) {
 		'<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
 		'</div>',
 		link: function(scope, iElement, iAttrs, controller) {
-			// scope.output = scope[iAttrs.output];
-			// scope.output = 1;
 			if(iAttrs.mode == 'in' || iAttrs.mode == 'out' || iAttrs.mode == 'mix') {
 				scope.mode = iAttrs.mode;
 			} else {
@@ -65,16 +33,6 @@ directive('appVersion', ['version', function(version) {
 			};
 		},
 		controller: function($scope, $element, $attrs, $transclude) {
-			// if ($attrs.mode=='in' || $attrs.mode=='out' || $attrs.mode=='mix') {
-			// 	$scope.mode = $attrs.mode;
-			// } else {
-			// 	$scope.mode = 'in';
-			// };
-			// if ($attrs.mode=='in') {
-			// 	$scope.isEdit = true;
-			// } else {
-			// 	$scope.isEdit = false;
-			// };
 			var element = $element;
 			$element.bind('dblclick', function(event) {
 				if($scope.mode == 'mix') {
@@ -144,8 +102,6 @@ directive('appVersion', ['version', function(version) {
 		scope: true,
 		require: 'ngModel',
 		link: function(scope, iElement, iAttrs, controller) {
-			// controller.$setViewValue(scope.model);
-			// iElement.val(scope.model);
 		},
 		controller: function($scope, $element, $attrs, $transclude) {
 			var scope = $scope;
