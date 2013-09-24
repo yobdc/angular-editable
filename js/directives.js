@@ -3,9 +3,8 @@
 /* Directives */
 
 
-angular.module('myApp.directives', [])..directive('editable', ['$parse', function($parse) {
+angular.module('myApp.directives', []).directive('editable', ['$parse', function($parse) {
 	return {
-		priority: 1000,
 		restrict: 'E',
 		replace: true,
 		scope: {
@@ -15,9 +14,9 @@ angular.module('myApp.directives', [])..directive('editable', ['$parse', functio
 		template: '<div>' + 
 		'<div ng-show="isEdit" ng-transclude></div>' + 
 		'<div ng-show="!isEdit">{{output}}</div>' + 
-		'<button ng-show="!isEdit" ng-click="restore()">Restore</button>' + 
-		'<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
-		'<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
+		'<button class="btn" ng-show="!isEdit&&mode==\'mix\'" ng-click="restore()">Restore</button>' +
+		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
+		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
 		'</div>',
 		link: function(scope, iElement, iAttrs, controller) {
 			if(iAttrs.mode == 'in' || iAttrs.mode == 'out' || iAttrs.mode == 'mix') {
@@ -90,19 +89,14 @@ angular.module('myApp.directives', [])..directive('editable', ['$parse', functio
 					element: element
 				});
 			};
-			$scope.$parent.$broadcast('mode', {
-				mode: $scope.mode
-			});
 		}
 	};
 }]).directive('edit', [function() {
 	return {
-		priority: 100000,
 		restrict: 'A',
 		scope: true,
 		require: 'ngModel',
-		link: function(scope, iElement, iAttrs, controller) {
-		},
+		link: function(scope, iElement, iAttrs, controller) {},
 		controller: function($scope, $element, $attrs, $transclude) {
 			var scope = $scope;
 			scope.copy = {};
@@ -125,7 +119,12 @@ angular.module('myApp.directives', [])..directive('editable', ['$parse', functio
 							copyDes = tmpDes;
 						};
 					};
-					copyDes[list[i - 1]] = angular.copy(tmpSrc);
+					if(typeof(tmpSrc) == 'object' && !tmpSrc.hasOwnProperty()) {
+						tmpSrc = undefined;
+						copyDes[list[i - 1]] = undefined;
+					} else {
+						copyDes[list[i - 1]] = angular.copy(tmpSrc);
+					};
 				};
 			var searchEle = function(array, target) {
 					var result = false;
@@ -156,17 +155,10 @@ angular.module('myApp.directives', [])..directive('editable', ['$parse', functio
 					copyAttr(scope.$parent.$parent, scope.copy, attrs.ngModel);
 				};
 			});
-			// if($scope.$parent.$parent.mode == 'in') {
-			$scope.$on('mode', function(event, args) {
-				if( !! args && !! args.element && searchEle(args.element, element[0])) {
-					scope.mode = args.mode;
-					$scope.$parent.$parent.$watch(attrs.ngModel, function(oldValue, newValue) {
-						copyAttr(scope.copy, scope.$parent.$parent, attrs.ngModel);
-						copyAttr(scope, scope.$parent.$parent, attrs.ngModel);
-					});
-				};
+			$scope.$parent.$parent.$watch(attrs.ngModel, function(oldValue, newValue) {
+				copyAttr(scope.copy, scope.$parent.$parent, attrs.ngModel);
+				copyAttr(scope, scope.$parent.$parent, attrs.ngModel);
 			});
-			// };
 			$scope.$on('restore', function(event, args) {
 				copyAttr(scope.$parent.$parent, scope.copy2, attrs.ngModel);
 				copyAttr(scope.copy, scope.copy2, attrs.ngModel);
