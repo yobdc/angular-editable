@@ -1,25 +1,44 @@
-<editable mode="in" output="address">
-    <input id="id1" edit ng-model="address">
-</editable>
-<hr>
-<editable mode="out" output="address">
-    <input id="id2" edit ng-model="address">
-</editable>
-<hr>
-<editable mode="mix" output="address">
-    <input id="id3" edit ng-model="address">
-</editable>
-<hr>
-<editable mode="mix" output="product.name+'_'+product.number">
-    <input id="id4" edit ng-model="product.name">
-    <input id="id5" edit ng-model="product.number">
-    <select id="select1" edit ng-options="o for o in names.options" ng-model="names.value"></select>
-    {{address}}{{product.name}}
-</editable>
-<hr>
-<button ng-click="show()">Show</button>
-<hr>
-<input id="id6" ng-model="address">
-<hr>
-<button ng-click="restore()">restore</button>
-<button ng-click="save()">Save</button>
+<form class="form-horizontal" role="form">
+	<div class="form-group">
+		<label class="col-lg-2 control-label">
+			账号
+		</label>
+		<editable mode="mix" output="customer.id" class="col-lg-10">
+			<input edit type="text" ng-model="customer.id">
+		</editable>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">
+			姓名
+		</label>
+		<editable mode="mix" output="customer.name" class="col-lg-10">
+			<input edit type="text" ng-model="customer.name">
+		</editable>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">
+			性别
+		</label>
+		<editable mode="mix" output="customer.gender" class="col-lg-10">
+			<input edit type="text" ng-model="customer.gender">
+		</editable>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">
+			地址
+		</label>
+		<editable mode="mix" output="customer.address.country+customer.address.city+customer.address.location" class="col-lg-10">
+			<input edit type="text" ng-model="customer.address.country">
+			<input edit type="text" ng-model="customer.address.city">
+			<input edit type="text" ng-model="customer.address.location">
+		</editable>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">
+		</label>
+		<div class="col-lg-10">
+			<button class="btn" ng-click="save()">保存</button>
+			<button class="btn" ng-click="restore()">恢复</button>
+		</div>
+	</div>
+</form>

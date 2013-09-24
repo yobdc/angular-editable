@@ -4,25 +4,15 @@
 
 angular.module('myApp.controllers', []).
 controller('MyCtrl1', ['$scope', 'HistoryService', function($scope, HistoryService) {
-	$scope.due_date = new Date();
-	$scope.person_name = "John Doe";
-	$scope.address = "133, North Avenue";
-	$scope.product = {
-		name: '11',
-		number: '33'
-	};
-
-	$scope.names = {
-		options: ['aaa','bbb','ccc'],
-		value: 'ccc'
-	};
-
-	$scope.handleInputBlur = function() {
-		var n = 0;
-	};
-
-	$scope.show = function(){
-		alert($scope.product.name + ' ' + $scope.product.number + ' ' + $scope.address + ' ' + $scope.names.value);
+	$scope.customer = {
+		id: '101',
+		name: 'Lex',
+		gender: 'M',
+		address: {
+			country: '中国',
+			city: '上海',
+			location: '新金桥路27号8号楼'
+		}
 	};
 	$scope.restore = function(){
 		HistoryService.restore();
