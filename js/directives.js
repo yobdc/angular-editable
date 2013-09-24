@@ -13,8 +13,7 @@ angular.module('myApp.directives', []).directive('editable', ['$parse', function
 		transclude: true,
 		template: '<div>' + 
 		'<div ng-show="isEdit" ng-transclude></div>' + 
-		'<div ng-show="!isEdit">{{output}}</div>' + 
-		'<button class="btn" ng-show="!isEdit&&mode==\'mix\'" ng-click="restore()">Restore</button>' +
+		'<label class="control-label" ng-show="!isEdit">{{output}}&nbsp;&nbsp;&nbsp;<i class="icon-repeat" ng-show="!isEdit&&mode==\'mix\'" ng-click="restore()"></i></label>' + 
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
 		'</div>',

@@ -20,7 +20,7 @@
 			性别
 		</label>
 		<editable mode="mix" output="customer.gender" class="col-lg-10">
-			<input edit type="text" ng-model="customer.gender">
+			<select edit ng-model="customer.gender" ng-options="o for o in genders"></select>
 		</editable>
 	</div>
 	<div class="form-group">

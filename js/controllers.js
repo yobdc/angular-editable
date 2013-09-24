@@ -14,6 +14,7 @@ controller('MyCtrl1', ['$scope', 'HistoryService', function($scope, HistoryServi
 			location: '新金桥路27号8号楼'
 		}
 	};
+	$scope.genders = ['M', 'F'];
 	$scope.restore = function(){
 		HistoryService.restore();
 	};
