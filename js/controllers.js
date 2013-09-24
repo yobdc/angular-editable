@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-controller('MyCtrl1', ['$scope', function($scope) {
+controller('MyCtrl1', ['$scope', 'HistoryService', function($scope, HistoryService) {
 	$scope.due_date = new Date();
 	$scope.person_name = "John Doe";
 	$scope.address = "133, North Avenue";
@@ -23,5 +23,11 @@ controller('MyCtrl1', ['$scope', function($scope) {
 
 	$scope.show = function(){
 		alert($scope.product.name + ' ' + $scope.product.number + ' ' + $scope.address + ' ' + $scope.names.value);
+	};
+	$scope.restore = function(){
+		HistoryService.restore();
+	};
+	$scope.save = function(){
+		HistoryService.save();
 	};
 }]);

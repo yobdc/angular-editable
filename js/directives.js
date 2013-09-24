@@ -42,7 +42,13 @@ directive('appVersion', ['version', function(version) {
 		},
 		// scope: true,
 		transclude: true,
-		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + '<div ng-show="!isEdit">{{output}}</div>' + '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + '<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + '</div>',
+		template: '<div>' + 
+		'<div ng-show="isEdit" ng-transclude></div>' + 
+		'<div ng-show="!isEdit">{{output}}</div>' + 
+		'<button ng-show="!isEdit" ng-click="restore()">Restore</button>' + 
+		'<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
+		'<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
+		'</div>',
 		link: function(scope, iElement, iAttrs, controller) {
 			// scope.output = scope[iAttrs.output];
 			// scope.output = 1;
@@ -121,6 +127,11 @@ directive('appVersion', ['version', function(version) {
 					element: element
 				});
 			};
+			$scope.restore = function() {
+				$scope.$parent.$broadcast('revert', {
+					element: element
+				});
+			};
 			$scope.$parent.$broadcast('mode', {
 				mode: $scope.mode
 			});
@@ -139,6 +150,7 @@ directive('appVersion', ['version', function(version) {
 		controller: function($scope, $element, $attrs, $transclude) {
 			var scope = $scope;
 			scope.copy = {};
+			scope.copy2 = {};
 			var attrs = $attrs;
 			var element = $element;
 			var copyAttr = function(des, src, attr) {
@@ -176,6 +188,7 @@ directive('appVersion', ['version', function(version) {
 					return result;
 				};
 			copyAttr(scope.copy, scope.$parent.$parent, attrs.ngModel);
+			copyAttr(scope.copy2, scope.$parent.$parent, attrs.ngModel);
 			$scope.$on('ok', function(event, args) {
 				if( !! args && !! args.element && searchEle(args.element, element[0])) {
 					copyAttr(scope.$parent.$parent, scope, attrs.ngModel);
@@ -198,6 +211,30 @@ directive('appVersion', ['version', function(version) {
 				};
 			});
 			// };
+			$scope.$on('restore', function(event, args) {
+				copyAttr(scope.$parent.$parent, scope.copy2, attrs.ngModel);
+				copyAttr(scope.copy, scope.copy2, attrs.ngModel);
+				copyAttr(scope, scope.copy2, attrs.ngModel);
+			});
+			$scope.$on('save', function(event, args) {
+				copyAttr(scope.copy2, scope.$parent.$parent, attrs.ngModel);
+			});
+			$scope.$on('revert', function(event, args) {
+				if( !! args && !! args.element && searchEle(args.element, element[0])) {
+					copyAttr(scope.$parent.$parent, scope.copy2, attrs.ngModel);
+					copyAttr(scope.copy, scope.copy2, attrs.ngModel);
+					copyAttr(scope, scope.copy2, attrs.ngModel);
+				};
+			});
+		}
+	};
+}]).factory('HistoryService', ['$rootScope', function($rootScope) {
+	return {
+		restore: function() {
+			$rootScope.$broadcast('restore');
+		},
+		save: function() {
+			$rootScope.$broadcast('save');
 		}
 	};
 }]);
