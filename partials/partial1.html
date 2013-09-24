@@ -1,18 +1,23 @@
 <editable mode="in" output="address">
-    <input edit ng-model="address">
+    <input id="id1" edit ng-model="address">
 </editable>
 <hr>
 <editable mode="out" output="address">
-    <input edit ng-model="address">
+    <input id="id2" edit ng-model="address">
 </editable>
 <hr>
 <editable mode="mix" output="address">
-    <input edit ng-model="address">
+    <input id="id3" edit ng-model="address">
 </editable>
 <hr>
 <editable mode="mix" output="product.name+'_'+product.number">
-    <input edit ng-model="product.name">
-    <input edit ng-model="product.number">
+    <input id="id4" edit ng-model="product.name">
+    <input id="id5" edit ng-model="product.number">
+    <select id="select1" edit ng-options="o for o in names.options" ng-model="names.value"></select>
+    {{address}}
 </editable>
 <hr>
 <button ng-click="show()">Show</button>
+<hr>
+<input id="id6" ng-model="address">
+<hr>

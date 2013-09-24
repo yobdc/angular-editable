@@ -34,6 +34,7 @@ directive('appVersion', ['version', function(version) {
 	};
 }).directive('editable', ['$parse', function($parse) {
 	return {
+		priority: 1000,
 		restrict: 'E',
 		replace: true,
 		scope: {
@@ -97,36 +98,39 @@ directive('appVersion', ['version', function(version) {
 			$(document).click(function(e) {
 				var tar = angular.element(e.target);
 				var result = searchEle($element.children(), tar[0]);
-				if(!result && $scope.mode == 'mix') {
+				if(!result && $scope.isEdit && ($scope.mode == 'mix' || $scope.mode == 'in')) {
 					$scope.ok();
 					$scope.$apply();
 				};
 			});
 
 			$scope.ok = function() {
-				$scope.isEdit = false;
+				if($scope.mode == 'mix') {
+					$scope.isEdit = false;
+				};
 				$scope.$parent.$broadcast('ok', {
 					element: element
 				});
 			};
 
 			$scope.cancel = function() {
-				$scope.isEdit = false;
+				if($scope.mode == 'mix') {
+					$scope.isEdit = false;
+				};
 				$scope.$parent.$broadcast('cancel', {
 					element: element
 				});
 			};
-
-			if($scope.mode == 'in') {
-				$scope.$watch('mode', function(oldValue, newValue) {
-					var n = 0;
-				});
-			};
+			$scope.$parent.$broadcast('mode', {
+				mode: $scope.mode
+			});
 		}
 	};
 }]).directive('edit', [function() {
 	return {
+		priority: 100000,
 		restrict: 'A',
+		scope: true,
 		require: 'ngModel',
 		link: function(scope, iElement, iAttrs, controller) {
 			// controller.$setViewValue(scope.model);
@@ -139,7 +143,21 @@ directive('appVersion', ['version', function(version) {
 			var element = $element;
 			var copyAttr = function(des, src, attr) {
 					var list = attr.split('.');
-					des[list[0]] = angular.copy(src[list[0]]);
+					var tmpDes = des;
+					var tmpSrc = src;
+					var copyDes = des;
+					var i = 0;
+					for(i = 0; i < list.length; i++) {
+						if( !! tmpDes[list[i]] == false) {
+							tmpDes[list[i]] = {};
+						};
+						tmpDes = tmpDes[list[i]];
+						tmpSrc = tmpSrc[list[i]];
+						if(list.length == i + 2) {
+							copyDes = tmpDes;
+						};
+					};
+					copyDes[list[i - 1]] = angular.copy(tmpSrc);
 				};
 			var searchEle = function(array, target) {
 					var result = false;
@@ -157,26 +175,29 @@ directive('appVersion', ['version', function(version) {
 					};
 					return result;
 				};
-			copyAttr(scope.copy, scope, attrs.ngModel);
-			$element.bind('click', function(event, args) {
-				if(!!args && !!args.element && searchEle(args.element, element)) {
-					copyAttr(scope.$parent, scope, attrs.ngModel);
-				};
-			});
+			copyAttr(scope.copy, scope.$parent.$parent, attrs.ngModel);
 			$scope.$on('ok', function(event, args) {
-				if(!!args && !!args.element && searchEle(args.element, element)) {
-					var n = 0;
-					// copyAttr(scope.$parent, scope, attrs.ngModel);
-					// scope.$parent.output = scope[attrs.ngModel];
+				if( !! args && !! args.element && searchEle(args.element, element[0])) {
+					copyAttr(scope.$parent.$parent, scope, attrs.ngModel);
+					copyAttr(scope.copy, scope, attrs.ngModel);
 				};
 			});
 			$scope.$on('cancel', function(event, args) {
-				if(!!args && !!args.element && searchEle(args.element, element)) {
-					copyAttr(scope.$parent, scope.copy, attrs.ngModel);
+				if( !! args && !! args.element && searchEle(args.element, element[0])) {
+					copyAttr(scope.$parent.$parent, scope.copy, attrs.ngModel);
 				};
-				// scope[attrs.ngModel] = scope.$parent[attrs.ngModel];
-				// scope[attrs.ngModel] = scope.$parent.output;
 			});
+			// if($scope.$parent.$parent.mode == 'in') {
+			$scope.$on('mode', function(event, args) {
+				if( !! args && !! args.element && searchEle(args.element, element[0])) {
+					scope.mode = args.mode;
+					$scope.$parent.$parent.$watch(attrs.ngModel, function(oldValue, newValue) {
+						copyAttr(scope.copy, scope.$parent.$parent, attrs.ngModel);
+						copyAttr(scope, scope.$parent.$parent, attrs.ngModel);
+					});
+				};
+			});
+			// };
 		}
 	};
 }]);
