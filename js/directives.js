@@ -3,7 +3,7 @@
 /* Directives */
 
 
-angular.module('myApp.directives', []).directive('editable', ['$parse', function($parse) {
+angular.module('myApp.directives', []).directive('editable', ['$compile', function($compile) {
 	return {
 		restrict: 'E',
 		replace: true,
@@ -11,29 +11,29 @@ angular.module('myApp.directives', []).directive('editable', ['$parse', function
 			output: '=output'
 		},
 		transclude: true,
-		template: '<div>' + 
-		'<div ng-show="isEdit" ng-transclude></div>' + 
-		'<label class="control-label showhim" ng-show="!isEdit">{{output}}&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&mode==\'mix\'" ng-click="restore()"></i></label>' + 
+		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + '<label class="control-label showhim" ng-show="!isEdit">{{output}}&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&(mode==\'mix\'||mode==\'popover\')" ng-click="restore()"></i></label>' +
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
 		'</div>',
-		link: function(scope, iElement, iAttrs, controller) {
-			if(iAttrs.mode == 'in' || iAttrs.mode == 'out' || iAttrs.mode == 'mix') {
-				scope.mode = iAttrs.mode;
-			} else {
-				scope.mode = 'in';
-			};
+		link: {
+			pre: function(scope, iElement, iAttrs, controller) {
+				var n = 0;
+			},
+			post: function(scope, iElement, iAttrs, controller) {
+				if(iAttrs.mode == 'in' || iAttrs.mode == 'out' || iAttrs.mode == 'mix' || iAttrs.mode == 'popover') {
+					scope.mode = iAttrs.mode;
+				} else {
+					scope.mode = 'in';
+				};
 
-			if(iAttrs.mode == 'in') {
-				scope.isEdit = true;
-			} else {
-				scope.isEdit = false;
-			};
+				if(iAttrs.mode == 'in') {
+					scope.isEdit = true;
+				} else {
+					scope.isEdit = false;
+				};
+			}
 		},
 		controller: function($scope, $element, $attrs, $transclude) {
-			$('.icon-repeat.showme').css({display:'none'});
-			$('.icon-repeat.showme').hide();
-			// $scope.$apply();
 			var element = $element;
 			$element.bind('dblclick', function(event) {
 				if($scope.mode == 'mix') {

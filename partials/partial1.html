@@ -13,6 +13,7 @@
 		</label>
 		<editable mode="mix" output="customer.name" class="col-lg-10">
 			<input edit type="text" ng-model="customer.name">
+			<span ng-show="!customer.name">zzz</span>
 		</editable>
 	</div>
 	<div class="form-group">
@@ -28,6 +29,16 @@
 			地址
 		</label>
 		<editable mode="mix" output="customer.address.country+customer.address.city+customer.address.location" class="col-lg-10">
+			<input edit type="text" ng-model="customer.address.country">
+			<input edit type="text" ng-model="customer.address.city">
+			<input edit type="text" ng-model="customer.address.location">
+		</editable>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">
+			地址(modal)
+		</label>
+		<editable mode="popover" output="customer.address.country+customer.address.city+customer.address.location" class="col-lg-10">
 			<input edit type="text" ng-model="customer.address.country">
 			<input edit type="text" ng-model="customer.address.city">
 			<input edit type="text" ng-model="customer.address.location">
