@@ -28,3 +28,10 @@
   content: "";
   padding: 0;
 }
+.showme{ 
+display: none;
+}
+.showhim:hover .showme{
+display : inline;
+/*float: right;*/
+}

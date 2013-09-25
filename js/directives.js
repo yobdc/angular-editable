@@ -13,7 +13,7 @@ angular.module('myApp.directives', []).directive('editable', ['$parse', function
 		transclude: true,
 		template: '<div>' + 
 		'<div ng-show="isEdit" ng-transclude></div>' + 
-		'<label class="control-label" ng-show="!isEdit">{{output}}&nbsp;&nbsp;&nbsp;<i class="icon-repeat" ng-show="!isEdit&&mode==\'mix\'" ng-click="restore()"></i></label>' + 
+		'<label class="control-label showhim" ng-show="!isEdit">{{output}}&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&mode==\'mix\'" ng-click="restore()"></i></label>' + 
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
 		'</div>',
@@ -31,6 +31,9 @@ angular.module('myApp.directives', []).directive('editable', ['$parse', function
 			};
 		},
 		controller: function($scope, $element, $attrs, $transclude) {
+			$('.icon-repeat.showme').css({display:'none'});
+			$('.icon-repeat.showme').hide();
+			// $scope.$apply();
 			var element = $element;
 			$element.bind('dblclick', function(event) {
 				if($scope.mode == 'mix') {
