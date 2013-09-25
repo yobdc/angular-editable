@@ -2,8 +2,13 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers']).
-  config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-    $routeProvider.otherwise({redirectTo: '/'});
-  }]);
+angular.module('myApp', ['$strap.directives', 'myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers']).
+config(['$routeProvider', function($routeProvider) {
+	$routeProvider.when('/', {
+		templateUrl: 'partials/partial1.html',
+		controller: 'MyCtrl1'
+	});
+	$routeProvider.otherwise({
+		redirectTo: '/'
+	});
+}]);
