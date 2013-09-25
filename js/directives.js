@@ -11,13 +11,29 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', functi
 			output: '=output'
 		},
 		transclude: true,
-		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + '<label class="control-label showhim" ng-show="!isEdit">{{output}}&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&(mode==\'mix\'||mode==\'popover\')" ng-click="restore()"></i></label>' +
+		template: '<div>' + 
+		'<div ng-show="isEdit" ng-transclude></div>' + 
+		'<script type="text/ng-template" id="temp.html">zzz</script>' + 
+		'<label class="control-label showhim" ng-show="!isEdit">{{output}}' + 
+		'&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&(mode==\'mix\'||mode==\'popover\')" ng-click="restore()"></i>' + 
+		'</label>' +
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
 		'</div>',
 		link: {
 			pre: function(scope, iElement, iAttrs, controller) {
-				var n = 0;
+				var generateId = function() {
+					var text = "";
+					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+					for(var i = 0; i < 5; i++)
+					text += possible.charAt(Math.floor(Math.random() * possible.length));
+					return text;
+				};
+
+				var tmpId = 'TMP' + generateId() + '.html';
+				var includeHtml = $('<div ng-include="\''+ tmpId +'\'"></div>');
+				iElement[0].children[1].id = tmpId;
+				iElement[0].appendChild(includeHtml[0]);
 			},
 			post: function(scope, iElement, iAttrs, controller) {
 				if(iAttrs.mode == 'in' || iAttrs.mode == 'out' || iAttrs.mode == 'mix' || iAttrs.mode == 'popover') {
