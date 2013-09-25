@@ -22,18 +22,6 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', functi
 		'</div>',
 		link: {
 			pre: function(scope, iElement, iAttrs, controller) {
-				var generateId = function() {
-					var text = "";
-					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-					for(var i = 0; i < 5; i++)
-					text += possible.charAt(Math.floor(Math.random() * possible.length));
-					return text;
-				};
-
-				var tmpId = 'TMP' + generateId() + '.html';
-				var includeHtml = $('<div ng-include="\''+ tmpId +'\'"></div>');
-				iElement[0].children[1].id = tmpId;
-				iElement[0].appendChild(includeHtml[0]);
 			},
 			post: function(scope, iElement, iAttrs, controller) {
 				if(iAttrs.mode == 'in' || iAttrs.mode == 'out' || iAttrs.mode == 'mix' || iAttrs.mode == 'popover') {
@@ -47,6 +35,20 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', functi
 				} else {
 					scope.isEdit = false;
 				};
+				var generateId = function() {
+					var text = "";
+					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+					for(var i = 0; i < 5; i++)
+					text += possible.charAt(Math.floor(Math.random() * possible.length));
+					return text;
+				};
+
+				var tmpId = 'TMP' + generateId() + '.html';
+				var includeHtml = $('<div ng-include="\''+ tmpId +'\'"></div>');
+				iElement[0].children[1].id = tmpId;
+				iElement[0].appendChild(includeHtml[0]);
+				$compile(angular.element(iElement[0].children[1]))(scope);
+				$compile(angular.element(includeHtml[0]))(scope);
 			}
 		},
 		controller: function($scope, $element, $attrs, $transclude) {
