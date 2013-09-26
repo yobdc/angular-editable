@@ -116,7 +116,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', functi
 		restrict: 'A',
 		scope: true,
 		require: 'ngModel',
-		link: function(scope, iElement, iAttrs, controller) {},
+		link: function(scope, iElement, iAttrs, ngModel) {},
 		controller: function($scope, $element, $attrs, $transclude) {
 			var scope = $scope;
 			scope.copy = {};
@@ -166,6 +166,8 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', functi
 			copyAttr(scope.copy2, scope.$parent.$parent, attrs.ngModel);
 			$scope.$on('ok', function(event, args) {
 				if( !! args && !! args.element && searchEle(args.element, element[0])) {
+					// $scope.$apply(function(){
+					// });
 					copyAttr(scope.$parent.$parent, scope, attrs.ngModel);
 					copyAttr(scope.copy, scope, attrs.ngModel);
 				};

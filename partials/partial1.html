@@ -55,3 +55,12 @@
 </form>
 <hr>
 {{customer}}
+<hr>
+<div ng-repeat="o in list">
+<editable mode="mix" output="o.name">
+	<input edit type="text" ng-model="o.name">
+</editable>
+</div>
+<hr>
+<button class="btn" ng-click="modifyList()">Modify</button>
+{{list}}
