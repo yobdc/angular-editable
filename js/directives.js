@@ -3,52 +3,60 @@
 /* Directives */
 
 
-angular.module('myApp.directives', []).directive('editable', ['$compile', function($compile) {
+angular.module('myApp.directives', []).directive('editable', ['$compile', 'RandomService', '$templateCache', function($compile, RandomService, $templateCache) {
 	return {
 		restrict: 'E',
 		replace: true,
 		scope: {
 			output: '=output'
 		},
+		priority: 0,
 		transclude: true,
-		template: '<div>' + 
-		'<div ng-show="isEdit" ng-transclude></div>' + 
-		'<script type="text/ng-template" id="temp.html">zzz</script>' + 
-		'<label class="control-label showhim" ng-show="!isEdit">{{output}}' + 
-		'&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&(mode==\'mix\'||mode==\'popover\')" ng-click="restore()"></i>' + 
-		'</label>' +
+		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + '<label class="control-label showhim" ng-show="!isEdit">{{output}}' + '&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&(mode==\'mix\'||mode==\'popover\')" ng-click="restore()"></i>' + '</label>' +
+		// '<script type="text/ng-template" id="zz.html" ng-transclude>111</script>' +
+		// '<button type="button" class="btn" bs-popover="\'zz.html\'">aaa</button>'+
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="cancel()">Cancel</button>' + 
 		'</div>',
-		link: {
-			pre: function(scope, iElement, iAttrs, controller) {
-			},
-			post: function(scope, iElement, iAttrs, controller) {
-				if(iAttrs.mode == 'in' || iAttrs.mode == 'out' || iAttrs.mode == 'mix' || iAttrs.mode == 'popover') {
-					scope.mode = iAttrs.mode;
-				} else {
-					scope.mode = 'in';
-				};
+		compile: function compile(tElement, tAttrs, transclude) {
+			return {
+				pre: function(scope, iElement, iAttrs, controller) {
+					scope.tmpId = 'TMP' + RandomService.string() + '.html'
+					scope.ele = iElement;
+					scope.includeHtml = $('<div><button type="button" class="btn" bs-popover="\''+scope.tmpId+'\'">aaa</button>' + '<script type="text/ng-template" id="' + scope.tmpId + '">zz</script></div>');
+					scope.ready = false;
+					transclude(scope, function(jElement, jScope){
+						jScope.includeHtml[0].children[1].appendChild(jElement[1]);
+						jScope.ele[0].appendChild(jScope.includeHtml[0]);
+						$templateCache.put(jScope.tmpId, jScope.includeHtml[0].children[1].innerHTML);
+						var a = $templateCache.get(jScope.tmpId);
+						jScope.ready = true;
+						$compile(angular.element(jScope.includeHtml[0]))(jScope);
+					});
+					while(!scope.ready){
+						continue;
+					}
+					// scope.tmpId = 'TMP' + RandomService.string() + '.html'
+					// scope.ele = iElement;
+					// scope.includeHtml = $('<div><button type="button" class="btn" bs-popover="\''+scope.tmpId+'\'">aaa</button>' + '<script type="text/ng-template" id="' + scope.tmpId + '" ng-transclude>zz</script></div>');
+					// scope.includeHtml[0].children[1].appendChild(scope.ele[1]);
+					// scope.ele[0].appendChild(scope.includeHtml[0]);
+					// $compile(angular.element(scope.includeHtml[0]))(scope);
+				},
+				post: function(scope, iElement, iAttrs, controller) {
+					if(iAttrs.mode == 'in' || iAttrs.mode == 'out' || iAttrs.mode == 'mix' || iAttrs.mode == 'popover') {
+						scope.mode = iAttrs.mode;
+					} else {
+						scope.mode = 'in';
+					};
 
-				if(iAttrs.mode == 'in') {
-					scope.isEdit = true;
-				} else {
-					scope.isEdit = false;
-				};
-				var generateId = function() {
-					var text = "";
-					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-					for(var i = 0; i < 5; i++)
-					text += possible.charAt(Math.floor(Math.random() * possible.length));
-					return text;
-				};
-
-				var tmpId = 'TMP' + generateId() + '.html';
-				var includeHtml = $('<div ng-include="\''+ tmpId +'\'"></div>');
-				iElement[0].children[1].id = tmpId;
-				iElement[0].appendChild(includeHtml[0]);
-				$compile(angular.element(iElement[0].children[1]))(scope);
-				$compile(angular.element(includeHtml[0]))(scope);
+					if(iAttrs.mode == 'in') {
+						scope.isEdit = true;
+					} else {
+						scope.isEdit = false;
+					};
+					// $templateCache.put('zz.html', iElement[0].children[2].innerHTML);
+				}
 			}
 		},
 		controller: function($scope, $element, $attrs, $transclude) {
