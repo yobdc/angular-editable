@@ -287,11 +287,14 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 				};
 			var getTopScope = function() {
 				var list = attrs.ngModel.split('.');
-				var top = scope.$parent;
+				if (list[0] in scope) {
+					return scope.$parent.$parent;
+				};
+				var top = scope;
 				while (!(list[0] in top)) {
 					top = top.$parent;
 				};
-				return top.$parent;
+				return top;
 			};
 			var refAttr = function(des, src, attr) {
 				var list = attr.split('.');
