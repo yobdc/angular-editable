@@ -147,8 +147,8 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		transclude: true,
 		template: '<div>' + 
 		'<div ng-transclude></div>' + 
-		'<label class="control-label showhim">{{output}}&nbsp;&nbsp;&nbsp;' + 
-		'<i class="icon-edit" bs-popover="\'{{tmpId}}\'"/>&nbsp;' + 
+		'<label class="control-label showhim"><span ng-show="isOut">{{output}}</span><span ng-hide="isOut">{{outputCopy}}</span>&nbsp;&nbsp;&nbsp;' + 
+		'<i class="icon-edit" ng-click="toggleOut()" bs-popover="\'{{tmpId}}\'"/>&nbsp;' + 
 		'<i class="icon-repeat showme" ng-show="!isEdit" ng-click="restore()"/>' + 
 		'</label>' +
 		// '<script type="text/ng-template" id="{{tmpId}}" ng-transclude>111</script>' +
@@ -159,9 +159,10 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		compile: function compile(tElement, tAttrs, transclude) {
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
+					scope.isOut = false;
 					scope.tmpId = iAttrs.tmpid;
 					// scope.tmpId = 'TMP' + RandomService.string() + '.html';
-					var popover = angular.element(iElement[0].children[1].children[0]);
+					var popover = angular.element(iElement[0].children[1].children[2]);
 					popover.attr('bs-popover','\''+scope.tmpId+'\'');
 					popover.attr('data-placement', iAttrs.placement);
 					$compile(popover)(scope);
@@ -176,6 +177,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		},
 		controller: function($scope, $element, $attrs, $transclude) {
 			var element = $element;
+			$scope.outputCopy = angular.copy($scope.output);
 			$element.bind('dblclick', function(event) {
 				// if($scope.mode == 'mix') {
 				// 	$scope.isEdit = true;
@@ -200,6 +202,10 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					};
 					return result;
 				};
+
+			$scope.toggleOut = function() {
+				$scope.isOut = !$scope.isOut;
+			};
 
 			// $(document).click(function(e) {
 			// 	var tar = angular.element(e.target);
@@ -298,9 +304,10 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			};
 			var refAttr = function(des, src, attr) {
 				var list = attr.split('.');
-				if (!(list[0] in des)) {
-					copyAttr(des, src, attr);
-				};				
+				des[list[0]] = src[list[0]];
+				// if (!(list[0] in des)) {
+				// 	copyAttr(des, src, attr);
+				// };				
 			};
 			var topScope = getTopScope();
 			copyAttr(scope.copy, topScope, attrs.ngModel);

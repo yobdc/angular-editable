@@ -70,13 +70,10 @@
 	<span ng-show="!customer.name">zzz</span>
 </editable>
 <editable2 ng-repeat="o in list" class="span2" mode="mix" output="o.name" tmpid="a.html" placement="bottom">
-	<script type="text/ng-template" id="a.html">			
-		<label class="control-label">
-			名称
-		</label>
-		<div class="controls">
-			<input edit type="text" ng-model="o.name">
-		</div>		
+	<script type="text/ng-template" id="a.html">
+	<pre>2 + 3 = <span ng-cloak>{{ 2 + 3 }}</span></pre>
+	<input edit type="text" ng-model="o.name">
+	<input edit type="text" ng-model="o.name">	
 	</script>
 </editable2>
 <!-- <editable2 mode="mix" output="customer.name">
