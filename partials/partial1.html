@@ -65,8 +65,15 @@
 <button class="btn" ng-click="modifyList()">Modify</button>
 {{list}}
 <hr> -->
-<editable2 mode="mix" output="customer.name" tmpId="a.html">
+<editable mode="mix" output="customer.name" class="controls">
+	<input edit type="text" ng-model="customer.name"></input>
+	<span ng-show="!customer.name">zzz</span>
+</editable>
+<editable2 ng-repeat="o in [1,2]" class="span2" mode="mix" output="customer.name" tmpid="a.html" placement="bottom">
 	<script type="text/ng-template" id="a.html">
-		<input edit2 type="text" ng-model="customer.name">
+		<input edit type="text" ng-model="customer.name">{{$index}}
 	</script>
 </editable2>
+<!-- <editable2 mode="mix" output="customer.name">
+	<input edit2 type="text" ng-model="customer.name">
+</editable2> -->

@@ -147,8 +147,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		transclude: true,
 		template: '<div>' + 
 		'<div ng-transclude></div>' + 
-		'<label class="control-label showhim" bs-popover="\'{{tmpId}}\'">{{output}}' + 
-		'&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit" ng-click="restore()"></i>' + 
+		'<label class="control-label showhim">{{output}}&nbsp;&nbsp;&nbsp;' + 
+		'<i class="icon-edit" bs-popover="\'{{tmpId}}\'"/>&nbsp;' + 
+		'<i class="icon-repeat showme" ng-show="!isEdit" ng-click="restore()"/>' + 
 		'</label>' +
 		// '<script type="text/ng-template" id="{{tmpId}}" ng-transclude>111</script>' +
 		// '<button type="button" class="btn" bs-popover="\'a.html\'">aaa</button>'+
@@ -158,10 +159,18 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		compile: function compile(tElement, tAttrs, transclude) {
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
-					// scope.tmpId = 'TMP' + RandomService.string() + '.html';
 					scope.tmpId = iAttrs.tmpid;
+					// scope.tmpId = 'TMP' + RandomService.string() + '.html';
+					var popover = angular.element(iElement[0].children[1].children[0]);
+					popover.attr('bs-popover','\''+scope.tmpId+'\'');
+					popover.attr('data-placement', iAttrs.placement);
+					$compile(popover)(scope);
 				},
 				post: function(scope, iElement, iAttrs, controller) {
+					// var popover = angular.element(iElement[0].children[1]);
+					// $compile(popover)(scope);
+					var scipt = angular.element(iElement[0].children[0].children[0]);
+					$compile(scipt)(scope);
 				}
 			}
 		},
@@ -276,36 +285,52 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					};
 					return result;
 				};
-			copyAttr(scope.copy, scope.$parent.$parent, attrs.ngModel);
-			copyAttr(scope.copy2, scope.$parent.$parent, attrs.ngModel);
+			var getTopScope = function() {
+				var list = attrs.ngModel.split('.');
+				var top = scope.$parent;
+				while (!(list[0] in top)) {
+					top = top.$parent;
+				};
+				return top.$parent;
+			};
+			var refAttr = function(des, src, attr) {
+				var list = attr.split('.');
+				if (!(list[0] in des)) {
+					copyAttr(des, src, attr);
+				};				
+			};
+			var topScope = getTopScope();
+			copyAttr(scope.copy, topScope, attrs.ngModel);
+			copyAttr(scope.copy2, topScope, attrs.ngModel);
+			refAttr(scope, topScope, attrs.ngModel);
 			$scope.$on('ok', function(event, args) {
 				if( !! args && !! args.element && searchEle(args.element, element[0])) {
 					// $scope.$apply(function(){
 					// });
-					copyAttr(scope.$parent.$parent, scope, attrs.ngModel);
+					copyAttr(topScope, scope, attrs.ngModel);
 					copyAttr(scope.copy, scope, attrs.ngModel);
 				};
 			});
 			$scope.$on('cancel', function(event, args) {
 				if( !! args && !! args.element && searchEle(args.element, element[0])) {
-					copyAttr(scope.$parent.$parent, scope.copy, attrs.ngModel);
+					copyAttr(topScope, scope.copy, attrs.ngModel);
 				};
 			});
-			$scope.$parent.$parent.$watch(attrs.ngModel, function(oldValue, newValue) {
-				copyAttr(scope.copy, scope.$parent.$parent, attrs.ngModel);
-				copyAttr(scope, scope.$parent.$parent, attrs.ngModel);
+			topScope.$watch(attrs.ngModel, function(oldValue, newValue) {
+				copyAttr(scope.copy, topScope, attrs.ngModel);
+				copyAttr(scope, topScope, attrs.ngModel);
 			});
 			$scope.$on('restore', function(event, args) {
-				copyAttr(scope.$parent.$parent, scope.copy2, attrs.ngModel);
+				copyAttr(topScope, scope.copy2, attrs.ngModel);
 				copyAttr(scope.copy, scope.copy2, attrs.ngModel);
 				copyAttr(scope, scope.copy2, attrs.ngModel);
 			});
 			$scope.$on('save', function(event, args) {
-				copyAttr(scope.copy2, scope.$parent.$parent, attrs.ngModel);
+				copyAttr(scope.copy2, topScope, attrs.ngModel);
 			});
 			$scope.$on('revert', function(event, args) {
 				if( !! args && !! args.element && searchEle(args.element, element[0])) {
-					copyAttr(scope.$parent.$parent, scope.copy2, attrs.ngModel);
+					copyAttr(topScope, scope.copy2, attrs.ngModel);
 					copyAttr(scope.copy, scope.copy2, attrs.ngModel);
 					copyAttr(scope, scope.copy2, attrs.ngModel);
 				};
