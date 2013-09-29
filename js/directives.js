@@ -268,7 +268,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 							copyDes = tmpDes;
 						};
 					};
-					if(typeof(tmpSrc) == 'object' && !tmpSrc.hasOwnProperty()) {
+					if(typeof(tmpSrc) == 'object' && !!tmpSrc && !tmpSrc.hasOwnProperty()) {
 						tmpSrc = undefined;
 						copyDes[list[i - 1]] = undefined;
 					} else {
@@ -309,10 +309,21 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 				// 	copyAttr(des, src, attr);
 				// };				
 			};
+			var extendScope = function(des, src) {
+				var exceptionList = ['$index'];
+				for(var attr in src) {
+					if (attr!='this'&&attr[0]!='$' && typeof(src[attr])!='function') {
+						refAttr(des, src, attr);
+					} else if (attr in exceptionList) {
+						refAttr(des, src, attr);
+					};
+				};
+			};
 			var topScope = getTopScope();
 			copyAttr(scope.copy, topScope, attrs.ngModel);
 			copyAttr(scope.copy2, topScope, attrs.ngModel);
-			refAttr(scope, topScope, attrs.ngModel);
+			extendScope(scope, topScope);
+			// refAttr(scope, topScope, attrs.ngModel);
 			$scope.$on('ok', function(event, args) {
 				if( !! args && !! args.element && searchEle(args.element, element[0])) {
 					// $scope.$apply(function(){
