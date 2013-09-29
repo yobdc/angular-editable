@@ -12,11 +12,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		},
 		priority: 0,
 		transclude: true,
-		template: '<div>' + 
-		'<div ng-show="isEdit" ng-transclude></div>' + 
-		'<label class="control-label showhim" ng-show="!isEdit">{{output}}' + 
-		'&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&(mode==\'mix\'||mode==\'popover\')" ng-click="restore()"></i>' + 
-		'</label>' +
+		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + '<label class="control-label showhim" ng-show="!isEdit">{{output}}' + '&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&(mode==\'mix\'||mode==\'popover\')" ng-click="restore()"></i>' + '</label>' +
 		// '<script type="text/ng-template" id="{{tmpId}}" ng-transclude>111</script>' +
 		// '<button type="button" class="btn" bs-popover="\'zz.html\'">aaa</button>'+
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
@@ -145,12 +141,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		},
 		priority: 0,
 		transclude: true,
-		template: '<div>' + 
-		'<div ng-transclude></div>' + 
-		'<label class="control-label showhim"><span ng-show="isOut">{{output}}</span><span ng-hide="isOut">{{outputCopy}}</span>&nbsp;&nbsp;&nbsp;' + 
-		'<i class="icon-edit" ng-click="toggleOut()" bs-popover="\'{{tmpId}}\'"/>&nbsp;' + 
-		'<i class="icon-repeat showme" ng-show="!isEdit" ng-click="restore()"/>' + 
-		'</label>' +
+		template: '<div>' + '<div ng-transclude></div>' + '<label class="control-label showhim"><span ng-show="isOut">{{output}}</span><span ng-hide="isOut">{{outputCopy}}</span>&nbsp;&nbsp;&nbsp;' + '<i class="icon-edit" ng-click="toggleOut()" bs-popover="\'{{tmpId}}\'"/>&nbsp;' + '<i class="icon-repeat showme" ng-show="!isEdit" ng-click="restore()"/>' + '</label>' +
 		// '<script type="text/ng-template" id="{{tmpId}}" ng-transclude>111</script>' +
 		// '<button type="button" class="btn" bs-popover="\'a.html\'">aaa</button>'+
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
@@ -163,7 +154,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					scope.tmpId = iAttrs.tmpid;
 					// scope.tmpId = 'TMP' + RandomService.string() + '.html';
 					var popover = angular.element(iElement[0].children[1].children[2]);
-					popover.attr('bs-popover','\''+scope.tmpId+'\'');
+					popover.attr('bs-popover', '\'' + scope.tmpId + '\'');
 					popover.attr('data-placement', iAttrs.placement);
 					$compile(popover)(scope);
 				},
@@ -215,7 +206,6 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			// 		$scope.$apply();
 			// 	};
 			// });
-
 			// $scope.ok = function() {
 			// 	if($scope.mode == 'mix') {
 			// 		$scope.isEdit = false;
@@ -224,7 +214,6 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			// 		element: element
 			// 	});
 			// };
-
 			// $scope.cancel = function() {
 			// 	if($scope.mode == 'mix') {
 			// 		$scope.isEdit = false;
@@ -263,12 +252,15 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 							tmpDes[list[i]] = {};
 						};
 						tmpDes = tmpDes[list[i]];
+						if(!(list[i] in tmpSrc)) {
+							tmpSrc[list[i]] = {};
+						};
 						tmpSrc = tmpSrc[list[i]];
 						if(list.length == i + 2) {
 							copyDes = tmpDes;
 						};
 					};
-					if(typeof(tmpSrc) == 'object' && !!tmpSrc && !tmpSrc.hasOwnProperty()) {
+					if(typeof(tmpSrc) == 'object' && !! tmpSrc && !tmpSrc.hasOwnProperty()) {
 						tmpSrc = undefined;
 						copyDes[list[i - 1]] = undefined;
 					} else {
@@ -292,33 +284,33 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					return result;
 				};
 			var getTopScope = function() {
-				var list = attrs.ngModel.split('.');
-				if (list[0] in scope) {
-					return scope.$parent.$parent;
+					var list = attrs.ngModel.split('.');
+					if(list[0] in scope) {
+						return scope.$parent.$parent;
+					};
+					var top = scope;
+					while(!(list[0] in top)) {
+						top = top.$parent;
+					};
+					return top;
 				};
-				var top = scope;
-				while (!(list[0] in top)) {
-					top = top.$parent;
-				};
-				return top;
-			};
 			var refAttr = function(des, src, attr) {
-				var list = attr.split('.');
-				des[list[0]] = src[list[0]];
-				// if (!(list[0] in des)) {
-				// 	copyAttr(des, src, attr);
-				// };				
-			};
+					var list = attr.split('.');
+					des[list[0]] = src[list[0]];
+					// if (!(list[0] in des)) {
+					// 	copyAttr(des, src, attr);
+					// };				
+				};
 			var extendScope = function(des, src) {
-				var exceptionList = ['$index'];
-				for(var attr in src) {
-					if (attr!='this'&&attr[0]!='$' && typeof(src[attr])!='function') {
-						refAttr(des, src, attr);
-					} else if (attr in exceptionList) {
-						refAttr(des, src, attr);
+					var exceptionList = ['$index'];
+					for(var attr in src) {
+						if(attr != 'this' && attr[0] != '$' && typeof(src[attr]) != 'function') {
+							refAttr(des, src, attr);
+						} else if(attr in exceptionList) {
+							refAttr(des, src, attr);
+						};
 					};
 				};
-			};
 			var topScope = getTopScope();
 			copyAttr(scope.copy, topScope, attrs.ngModel);
 			copyAttr(scope.copy2, topScope, attrs.ngModel);
