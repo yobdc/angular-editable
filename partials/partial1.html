@@ -1,5 +1,5 @@
-<!-- <form class="form-horizontal" role="form">
-	<div class="control-group">
+<form class="form-horizontal" role="form">
+<!-- 	<div class="control-group">
 		<label class="control-label">
 			账号（只读）
 		</label>
@@ -15,16 +15,19 @@
 			<input edit type="text" ng-model="customer.name"></input>
 			<span ng-show="!customer.name">zzz</span>
 		</editable>
-	</div>
+	</div> -->
 	<div class="control-group">
 		<label class="control-label">
 			性别
 		</label>
+		<!-- <editable mode="mix" output="customer.gender" class="controls">
+			<select edit ng-model="customer.gender" ng-options="o.name for o in genders"></select>
+		</editable> -->
 		<editable mode="mix" output="customer.gender" class="controls">
 			<select edit ng-model="customer.gender" ng-options="o for o in genders"></select>
 		</editable>
 	</div>
-	<div class="control-group">
+	<!-- <div class="control-group">
 		<label class="control-label">
 			地址
 		</label>
@@ -51,12 +54,12 @@
 			<button class="btn" ng-click="save()">保存</button>
 			<button class="btn" ng-click="restore()">恢复</button>
 		</div>
-	</div>
+	</div> -->
 </form>
 <hr>
 {{customer}}
 <hr>
-<div ng-repeat="o in list">
+<!-- <div ng-repeat="o in list">
 <editable mode="mix" output="o.name">
 	<input edit type="text" ng-model="o.name">
 </editable>
@@ -64,7 +67,7 @@
 <hr>
 <button class="btn" ng-click="modifyList()">Modify</button>
 {{list}}
-<hr> -->
+<hr>
 <editable mode="mix" output="customer.name" class="controls">
 	<input edit type="text" ng-model="customer.name"></input>
 	<span ng-show="!customer.name">zzz</span>{{customer.name}}
@@ -75,7 +78,7 @@
 	<input edit type="text" ng-model="o.name">
 	<input edit type="text" ng-model="o.name">{{$index}}
 	</script>
-</editable2>
+</editable2> -->
 <!-- <editable2 mode="mix" output="customer.name">
 	<input edit2 type="text" ng-model="customer.name">
 </editable2> -->

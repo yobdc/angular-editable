@@ -3,11 +3,11 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-controller('MyCtrl1', ['$scope', 'HistoryService', function($scope, HistoryService) {
+controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, HistoryService, $timeout) {
 	$scope.customer = {
 		id: '101',
 		name: 'Lex',
-		gender: 'M',
+		// gender: 'M',
 		address: {
 			country: '中国',
 			city: '上海',
@@ -16,20 +16,26 @@ controller('MyCtrl1', ['$scope', 'HistoryService', function($scope, HistoryServi
 	};
 	$scope.list = [{
 		name: '11'
-	},{
+	}, {
 		name: '22'
-	},{
+	}, {
 		name: '33'
 	}];
-	$scope.genders = ['M', 'F'];
-	$scope.restore = function(){
+	$timeout(function() {
+		// $scope.genders = [{"name":"个人","code":"Person","description":null},{"name":"公司","code":"Company","description":null}];
+		// $scope.customer.gender = $scope.genders[0];
+
+		$scope.genders = ['M', 'F'];
+		$scope.customer.gender = $scope.genders[0];
+	}, 1000);
+	$scope.restore = function() {
 		HistoryService.restore();
 	};
-	$scope.save = function(){
+	$scope.save = function() {
 		HistoryService.save();
 	};
-	$scope.modifyList = function(){
-		for (var i = 0; i < $scope.list.length; i++) {
+	$scope.modifyList = function() {
+		for(var i = 0; i < $scope.list.length; i++) {
 			$scope.list[i].name += 'a';
 		};
 	};

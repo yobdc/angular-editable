@@ -329,7 +329,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					copyAttr(topScope, scope.copy, attrs.ngModel);
 				};
 			});
-			topScope.$watch(attrs.ngModel, function(oldValue, newValue) {
+			topScope.$watch(attrs.ngModel, function(newValue, oldValue) {
 				copyAttr(scope.copy, topScope, attrs.ngModel);
 				copyAttr(scope, topScope, attrs.ngModel);
 			});
