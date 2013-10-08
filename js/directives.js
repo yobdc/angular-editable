@@ -290,9 +290,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						return scope.$parent.$parent;
 					};
 					var top = scope;
-					while(!(list[0] in top)) {
-						top = top.$parent;
-					};
+                    while(!(top.hasOwnProperty('init'))) {
+                        top = top.$parent;
+                    };
 					return top;
 				};
 			var refAttr = function(des, src, attr) {

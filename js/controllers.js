@@ -4,9 +4,10 @@
 
 angular.module('myApp.controllers', []).
 controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, HistoryService, $timeout) {
+	$scope.init = function() {};
 	$scope.customer = {
 		id: '101',
-		name: 'Lex',
+		// name: 'Lex',
 		// gender: 'M',
 		address: {
 			country: '中国',
@@ -23,13 +24,13 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 	}];
 
 	$scope.selectedList = $scope.list[1];
-	// $timeout(function() {
-	// 	// $scope.genders = [{"name":"个人","code":"Person","description":null},{"name":"公司","code":"Company","description":null}];
-	// 	// $scope.customer.gender = $scope.genders[0];
-
-	// 	$scope.genders = ['M', 'F'];
-	// 	$scope.customer.gender = $scope.genders[0];
-	// }, 1000);
+	$timeout(function() {
+		// $scope.genders = [{"name":"个人","code":"Person","description":null},{"name":"公司","code":"Company","description":null}];
+		// $scope.customer.gender = $scope.genders[0];
+		$scope.genders = ['M', 'F'];
+		$scope.customer.gender = $scope.genders[0];
+		$scope.customer.name = 'LEX';
+	}, 1000);
 	$scope.restore = function() {
 		HistoryService.restore();
 	};
