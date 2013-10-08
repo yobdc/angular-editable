@@ -21,13 +21,15 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 	}, {
 		name: '33'
 	}];
-	$timeout(function() {
-		// $scope.genders = [{"name":"个人","code":"Person","description":null},{"name":"公司","code":"Company","description":null}];
-		// $scope.customer.gender = $scope.genders[0];
 
-		$scope.genders = ['M', 'F'];
-		$scope.customer.gender = $scope.genders[0];
-	}, 1000);
+	$scope.selectedList = $scope.list[1];
+	// $timeout(function() {
+	// 	// $scope.genders = [{"name":"个人","code":"Person","description":null},{"name":"公司","code":"Company","description":null}];
+	// 	// $scope.customer.gender = $scope.genders[0];
+
+	// 	$scope.genders = ['M', 'F'];
+	// 	$scope.customer.gender = $scope.genders[0];
+	// }, 1000);
 	$scope.restore = function() {
 		HistoryService.restore();
 	};
@@ -35,8 +37,6 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 		HistoryService.save();
 	};
 	$scope.modifyList = function() {
-		for(var i = 0; i < $scope.list.length; i++) {
-			$scope.list[i].name += 'a';
-		};
+		$scope.selectedList = $scope.list[0];
 	};
 }]);

@@ -78,7 +78,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 				if($scope.mode == 'mix') {
 					$scope.isEdit = true;
 					$scope.$apply();
-					$("input")[0].focus();
+					// $("input")[0].focus();
 				};
 			});
 
@@ -261,8 +261,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						};
 					};
 					if(typeof(tmpSrc) == 'object' && !! tmpSrc && !tmpSrc.hasOwnProperty()) {
-						tmpSrc = undefined;
-						copyDes[list[i - 1]] = undefined;
+						// tmpSrc = undefined;
+						// copyDes[list[i - 1]] = undefined;
+						copyDes[list[i - 1]] = tmpSrc;
 					} else {
 						copyDes[list[i - 1]] = angular.copy(tmpSrc);
 					};
@@ -332,6 +333,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			topScope.$watch(attrs.ngModel, function(newValue, oldValue) {
 				copyAttr(scope.copy, topScope, attrs.ngModel);
 				copyAttr(scope, topScope, attrs.ngModel);
+			});
+			$scope.$watch(attrs.ngModel, function(newValue, oldValue) {
+				copyAttr(topScope, scope, attrs.ngModel);
 			});
 			$scope.$on('restore', function(event, args) {
 				copyAttr(topScope, scope.copy2, attrs.ngModel);
