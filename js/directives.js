@@ -12,7 +12,11 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		},
 		priority: 0,
 		transclude: true,
-		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + '<label class="control-label showhim" ng-show="!isEdit">{{output}}' + '&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="!isEdit&&(mode==\'mix\'||mode==\'popover\')" ng-click="restore()"></i>' + '</label>' +
+		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + 
+		//
+		'&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="isEdit && mode==\'mix\'" ng-click="restore()"></i>' + 
+		//
+		'<label class="control-label showhim" ng-show="!isEdit">{{output}}</label>' +
 		// '<script type="text/ng-template" id="{{tmpId}}" ng-transclude>111</script>' +
 		// '<button type="button" class="btn" bs-popover="\'zz.html\'">aaa</button>'+
 		// '<button ng-show="isEdit&&mode==\'mix\'" ng-click="ok()">OK</button>' + 
