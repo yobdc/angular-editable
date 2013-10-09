@@ -54,7 +54,7 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 
 	$scope.blurEmail = function(email) {
 		if (email) {
-			$scope.contact.emails.push(email);
+			$scope.contact.emails.push({value:email});
 			$scope.contact.emails.creating = false;
 		} else {			
 			if ($scope.contact.emails.length>0) {
