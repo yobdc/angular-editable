@@ -84,3 +84,14 @@
 <!-- <editable2 mode="mix" output="customer.name">
 	<input edit2 type="text" ng-model="customer.name">
 </editable2> -->
+<hr>
+{{contact}}
+<div ng-repeat="email in contact.emails">
+	<editable mode="mix" output="email" ng-show="email">
+		<input edit ng-model="email">
+	</editable>
+</div>
+<input id="tmpEmail" ng-blur="blurEmail(tmpEmail)" ng-model="tmpEmail" ng-show="contact.emails.creating">
+<div ng-show="!contact.emails.creating">
+	<a ng-click="addEmail()">Add</a>
+</div>

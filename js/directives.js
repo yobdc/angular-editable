@@ -12,9 +12,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		},
 		priority: 0,
 		transclude: true,
-		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' + 
+		template: '<div>' + '<div ng-show="isEdit" ng-transclude></div>' +
 		//
-		'&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="isEdit && mode==\'mix\'" ng-click="restore()"></i>' + 
+		'&nbsp;&nbsp;&nbsp;<i class="icon-repeat showme" ng-show="isEdit && mode==\'mix\'" ng-click="restore()"></i>' +
 		//
 		'<label class="control-label showhim" ng-show="!isEdit">{{output}}</label>' +
 		// '<script type="text/ng-template" id="{{tmpId}}" ng-transclude>111</script>' +
@@ -294,9 +294,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						return scope.$parent.$parent;
 					};
 					var top = scope;
-                    while(!(top.hasOwnProperty('init'))) {
-                        top = top.$parent;
-                    };
+					while(!(top.hasOwnProperty('init'))) {
+						top = top.$parent;
+					};
 					return top;
 				};
 			var refAttr = function(des, src, attr) {
@@ -367,4 +367,15 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			$rootScope.$broadcast('save');
 		}
 	};
+}]).directive('ngBlur', ['$parse', function($parse) {
+	return function(scope, element, attr) {
+		var fn = $parse(attr['ngBlur']);
+		element.bind('blur', function(event) {
+			scope.$apply(function() {
+				fn(scope, {
+					$event: event
+				});
+			});
+		});
+	}
 }]);

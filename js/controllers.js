@@ -40,4 +40,27 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 	$scope.modifyList = function() {
 		$scope.selectedList = $scope.list[0];
 	};
+
+	$scope.contact = {
+		emails: []
+	};
+	$scope.contact.emails.creating = true;
+
+	$scope.addEmail = function() {
+		$scope.contact.emails.creating = true;
+		$scope.tmpEmail = '';
+		$('#tmpEmail').focus();
+	};
+
+	$scope.blurEmail = function(email) {
+		if (email) {
+			$scope.contact.emails.push(email);
+			$scope.contact.emails.creating = false;
+		} else {			
+			if ($scope.contact.emails.length>0) {
+				$scope.contact.emails.creating = false;
+			};
+		};
+		console.log('blur email:'+email+"__");
+	};
 }]);
