@@ -35,3 +35,7 @@ display: none;
 display : inline;
 /*float: right;*/
 }
+
+input {
+  border: none;
+}

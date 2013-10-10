@@ -1,96 +1,37 @@
-<form class="form-horizontal" role="form">
+<hr>
+<div class="form-horizontal span12">
 	<div class="control-group">
 		<label class="control-label">
-			账号（只读）
-		</label>
-		<editable mode="out" output="customer.id" class="controls">
-			<input edit type="text" ng-model="customer.id">{{customer.id}}
-		</editable>
-	</div>
-	<div class="control-group">
-		<label class="control-label">
-			姓名
-		</label>
-		<editable mode="mix" output="customer.name" class="controls">
-			<input edit type="text" ng-model="customer.name"></input>
-			<span ng-show="!customer.name">zzz</span>
-		</editable>
-	</div>
-	<div class="control-group">
-		<label class="control-label">
-			性别
-		</label>
-		<editable mode="mix" output="selectedList.name" class="controls">
-			<select edit ng-model="selectedList" ng-options="o.name for o in list"></select>
-		</editable>
-		<!-- <editable mode="mix" output="customer.gender" class="controls">
-			<select edit ng-model="customer.gender" ng-options="o for o in genders"></select>
-		</editable> -->
-	</div>
-	<!-- <div class="control-group">
-		<label class="control-label">
-			地址
-		</label>
-		<editable mode="mix" output="customer.address.country+customer.address.city+customer.address.location" class="controls">
-			<input edit type="text" ng-model="customer.address.country">
-			<input edit type="text" ng-model="customer.address.city">
-			<input edit type="text" ng-model="customer.address.location">
-		</editable>
-	</div>
-	<div class="control-group">
-		<label class="control-label">
-			地址(modal)
-		</label>
-		<editable mode="popover" output="customer.address.country+customer.address.city+customer.address.location" class="controls">
-			<input edit type="text" ng-model="customer.address.country">
-			<input edit type="text" ng-model="customer.address.city">
-			<input edit type="text" ng-model="customer.address.location">
-		</editable>
-	</div>
-	<div class="control-group">
-		<label class="control-label">
+			Type
 		</label>
 		<div class="controls">
-			<button class="btn" ng-click="save()">保存</button>
-			<button class="btn" ng-click="restore()">恢复</button>
+			<select ng-model="contact.type" ng-options="o.name for o in types"/>
 		</div>
-	</div> -->
-</form>
-<hr>
-{{customer}}
-<hr>
-{{selectedList}}
-<button class="btn" ng-click="modifyList()">Modify</button>
-<!-- <div ng-repeat="o in list">
-<editable mode="mix" output="o.name">
-	<input edit type="text" ng-model="o.name">
-</editable>
-</div>
-<hr>
-<button class="btn" ng-click="modifyList()">Modify</button>
-{{list}}
-<hr>
-<editable mode="mix" output="customer.name" class="controls">
-	<input edit type="text" ng-model="customer.name"></input>
-	<span ng-show="!customer.name">zzz</span>{{customer.name}}
-</editable>
-<editable2 ng-repeat="o in list" class="span2" mode="mix" output="o.name" tmpid="a.html" placement="bottom">
-	<script type="text/ng-template" id="a.html">
-	<pre>2 + 3 = <span ng-cloak>{{ 2 + 3 }}</span></pre>
-	<input edit type="text" ng-model="o.name">
-	<input edit type="text" ng-model="o.name">{{$index}}
-	</script>
-</editable2> -->
-<!-- <editable2 mode="mix" output="customer.name">
-	<input edit2 type="text" ng-model="customer.name">
-</editable2> -->
-<hr>
-<div ng-repeat="email in contact.emails">
-	<editable mode="mix" output="email.value">
-		<input edit ng-model="email.value">
-	</editable>
-</div>
-<input id="tmpEmail" ng-blur="blurEmail(tmpEmail)" ng-model="tmpEmail" ng-show="contact.emails.creating">
-<div ng-show="!contact.emails.creating">
-	<a ng-click="addEmail()">Add</a>
+	</div>
+	<div class="control-group">
+		<label class="control-label">
+			Email
+		</label>
+		<div class="controls">
+			<input type="text" ng-model="contact.email">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">
+			Phone
+		</label>
+		<div class="controls">
+			<input type="text" ng-model="contact.phone">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">
+			Address
+		</label>
+		<div class="controls">
+			<input type="text" ng-model="contact.address.address1">
+			<input type="text" ng-model="contact.address.address2">
+			<input type="text" ng-model="contact.address.address3">
+		</div>
+	</div>
 </div>

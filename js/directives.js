@@ -281,4 +281,20 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			});
 		});
 	}
+}]).directive('edit', [function() {
+	return {
+		restrict: 'A',
+		scope: true,
+		require: 'ngModel',
+		compile: function compile(tElement, tAttrs, transclude) {
+			return {
+				pre: function(scope, iElement, iAttrs, controller) {
+				},
+				post: function(scope, iElement, iAttrs, controller) {
+				}
+			}
+		},
+		controller: function($scope, $element, $attrs, $transclude) {
+		}
+	};
 }]);
