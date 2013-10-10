@@ -1,4 +1,4 @@
-/* app css stylesheet */
+ app css stylesheet */
 
 .menu {
   list-style: none;
@@ -64,6 +64,22 @@ display : inline;
   padding-top: 5px;
   display: inline-block;
 }
-.line .controls label:hover {
+/*.line .controls label:hover {
   background-color: #FFF;
+}*/
+.line label select:hover {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 2px 30px 2px 2px;
+    border: none;
+    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+}
+.line label select {
+    -webkit-appearance: none;
+   -moz-appearance: none;
+    appearance: none;
+    padding: 2px 30px 2px 2px;
+    border: none;
+    background: transparent;
 }

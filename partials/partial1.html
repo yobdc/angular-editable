@@ -25,9 +25,9 @@
 			<input type="text" ng-model="contact.phone">
 		</div>
 	</div>
-	<div class="control-group line">
+	<div id="my" class="control-group line">
 		<label class="control-label">
-			Address
+			<select style="width:70px;" ng-model="contact.type" ng-options="o.name for o in types"/>
 		</label>
 		<div class="controls" ng-show="!isEdit">
 			<label ng-click="edit()">
