@@ -289,7 +289,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
 					scope.__edit = scope.__edit || {};
-					var label = '<div class="controls" ng-show="!isEdit">' + //
+					var label = '<div class="controls">' + //
 					'<label ng-click="edit()">' + //
 					'{{' + iAttrs.out + '}}' + //
 					'</label>' + //
@@ -297,16 +297,32 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					'</div>';
 					var labelElem = angular.element($(label));
 					$compile(labelElem)(scope);
-					labelElem.find('label').click(function(elem){
-						scope.__edit[id] = true;
+					labelElem.find('label').click(function(elem) {
+						labelElem.css({
+							display: 'none'
+						});
+						iElement.css({
+							display: 'block'
+						});
+					});
+					labelElem.find('.icon-pencil').click(function(elem) {
+						labelElem.css({
+							display: 'none'
+						});
+						iElement.css({
+							display: 'block'
+						});
 					});
 
 					iElement.css({
-						display: "block"
+						display: "none"
 					});
 					var id = RandomService.string();
 					scope.__edit[id] = false;
 					iElement.attr('id', id);
+
+					var trashElem = angular.element($('<i class="icon-trash" title="Delete" ng-click="clear()"/>'));
+					iElement.append(trashElem);
 
 					iElement.after(labelElem);
 
@@ -327,15 +343,26 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						return result;
 					};
 					$(document).click(function(elem) {
-						if(scope.__edit[id]) {
-							var tar = angular.element(elem.target);
-							var parent = iElement;
-							var result = inside(parent[0].children, tar[0])||inside(labelElem[0].children, tar[0]);
-							// if(legal()) {
-								scope.__edit[id] = result;
-								// $scope.$apply();
-							// };
+						var tar = angular.element(elem.target);
+						var parent = iElement;
+						var result = inside(parent[0].children, tar[0]) || inside(labelElem[0].children, tar[0]);
+						// if(legal()) {
+						if(result) {
+							labelElem.css({
+								display: 'none'
+							});
+							iElement.css({
+								display: 'block'
+							});
+						} else {
+							labelElem.css({
+								display: 'block'
+							});
+							iElement.css({
+								display: 'none'
+							});
 						};
+						// };
 					});
 				},
 				post: function(scope, iElement, iAttrs, controller) {
