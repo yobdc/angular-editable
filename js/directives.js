@@ -298,20 +298,10 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					var labelElem = angular.element($(label));
 					$compile(labelElem)(scope);
 					labelElem.find('label').click(function(elem) {
-						labelElem.css({
-							display: 'none'
-						});
-						iElement.css({
-							display: 'block'
-						});
+						showInput();
 					});
 					labelElem.find('.icon-pencil').click(function(elem) {
-						labelElem.css({
-							display: 'none'
-						});
-						iElement.css({
-							display: 'block'
-						});
+						showInput();
 					});
 
 					iElement.css({
@@ -325,7 +315,22 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					iElement.append(trashElem);
 
 					iElement.after(labelElem);
-
+					function showInput() {
+						labelElem.css({
+							display: 'none'
+						});
+						iElement.css({
+							display: 'block'
+						});
+					};
+					function hideInput() {
+						labelElem.css({
+							display: 'block'
+						});
+						iElement.css({
+							display: 'none'
+						});
+					};
 					function inside(array, target) {
 						var result = false;
 						for(var i = 0; i < array.length; i++) {
@@ -348,19 +353,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						var result = inside(parent[0].children, tar[0]) || inside(labelElem[0].children, tar[0]);
 						// if(legal()) {
 						if(result) {
-							labelElem.css({
-								display: 'none'
-							});
-							iElement.css({
-								display: 'block'
-							});
+							showInput();
 						} else {
-							labelElem.css({
-								display: 'block'
-							});
-							iElement.css({
-								display: 'none'
-							});
+							hideInput();
 						};
 						// };
 					});
