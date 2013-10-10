@@ -36,6 +36,34 @@ display : inline;
 /*float: right;*/
 }
 
-input {
-  border: none;
+.line:hover {
+  background-color: #F0F0F0;
+}
+.line .icon-trash {
+  display: none;
+}
+.line .icon-pencil {
+  display: none;
+}
+.line:hover .icon-pencil {
+  display: inline;
+  float: right;
+  margin: 7px 10px auto auto;
+}
+.line input:focus~.icon-trash {
+  display: inline;
+  float: right;
+  margin: 7px 10px auto auto;
+}
+.line .icon-trash:hover {
+  display: inline;
+  float: right;
+  margin: 7px 10px auto auto;
+}
+.line .controls label {
+  padding-top: 5px;
+  display: inline-block;
+}
+.line .controls label:hover {
+  background-color: #FFF;
 }

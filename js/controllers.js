@@ -5,7 +5,7 @@
 angular.module('myApp.controllers', []).
 controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, HistoryService, $timeout) {
 	$scope.init = function() {};
-	
+
 	$scope.types = [{
 		code: 'H',
 		name: '家庭'
@@ -18,9 +18,17 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 		emails: [],
 		phones: [],
 		address: {
-			address1: null,
-			address2: null,
-			address3: null
+			address1: "上海",
+			address2: "浦东",
+			address3: "新金桥路"
 		}
+	};
+	$scope.edit = function(){
+		$scope.isEdit = true;
+	};
+	$scope.clear = function() {
+		$scope.contact.address.address1 = null;
+		$scope.contact.address.address2 = null;
+		$scope.contact.address.address3 = null;
 	};
 }]);
