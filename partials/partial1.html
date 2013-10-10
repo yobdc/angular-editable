@@ -1,6 +1,6 @@
 {{contact}}
 <hr>
-<div class="form-horizontal span12">
+<div class="form-horizontal">
 	<div class="control-group line">
 		<label class="control-label">
 			Type
@@ -31,7 +31,7 @@
 		</label>
 		<div class="controls" ng-show="!isEdit">
 			<label ng-click="edit()">
-				{{contact.address.address1}}{{contact.address.address2}}{{contact.address.address3}}
+				{{contact.address.address1+contact.address.address2+contact.address.address3}}
 			</label>
 			<i class="icon-pencil" title="Edit" ng-click="edit()"/>
 		</div>
@@ -41,5 +41,18 @@
 			<input type="text" ng-model="contact.address.address3">
 			<i class="icon-trash" title="Delete" ng-click="clear()"/>
 		</div>
+	</div>
+</div>
+<hr>
+<div class="form-horizontal">
+	<div class="control-group line">
+		<label class="control-label">
+			Address
+		</label>
+		<edit2 out="contact.address.address1+contact.address.address2+contact.address.address3" class="controls">
+			<input type="text" ng-model="contact.address.address1">
+			<input type="text" ng-model="contact.address.address2">
+			<input type="text" ng-model="contact.address.address3">
+		</edit2>
 	</div>
 </div>

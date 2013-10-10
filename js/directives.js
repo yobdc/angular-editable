@@ -281,20 +281,32 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			});
 		});
 	}
-}]).directive('edit', [function() {
+}]).directive('edit2', ['$compile', function($compile) {
 	return {
-		restrict: 'A',
-		scope: true,
-		require: 'ngModel',
+		restrict: 'E',
+		scope: false,
 		compile: function compile(tElement, tAttrs, transclude) {
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
+					iElement.css({
+						display: "block"
+					});
+					var label = '<div class="controls" ng-show="!isEdit">' + //
+					'<label ng-click="edit()">' + //
+					'{{'+iAttrs.out+'}}' + //
+					'</label>' + //
+					'<i class="icon-pencil" title="Edit" ng-click="edit()"/>' + //
+					'</div>';
+					var labelElem = angular.element($(label));
+					iElement.after(labelElem);
+					$compile(labelElem)(scope);
 				},
 				post: function(scope, iElement, iAttrs, controller) {
+					var n = 0;
+					console.log('edit2 postlink');
 				}
 			}
 		},
-		controller: function($scope, $element, $attrs, $transclude) {
-		}
+		controller: function($scope, $element, $attrs, $transclude) {}
 	};
 }]);
