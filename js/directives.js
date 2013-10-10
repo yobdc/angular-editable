@@ -281,25 +281,62 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			});
 		});
 	}
-}]).directive('edit2', ['$compile', function($compile) {
+}]).directive('edit2', ['$compile', 'RandomService', function($compile, RandomService) {
 	return {
 		restrict: 'E',
 		scope: false,
 		compile: function compile(tElement, tAttrs, transclude) {
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
+					scope.__edit = scope.__edit || {};
+					var label = '<div class="controls" ng-show="!isEdit">' + //
+					'<label ng-click="edit()">' + //
+					'{{' + iAttrs.out + '}}' + //
+					'</label>' + //
+					'<i class="icon-pencil" title="Edit"/>' + //
+					'</div>';
+					var labelElem = angular.element($(label));
+					$compile(labelElem)(scope);
+					labelElem.find('label').click(function(elem){
+						scope.__edit[id] = true;
+					});
+
 					iElement.css({
 						display: "block"
 					});
-					var label = '<div class="controls" ng-show="!isEdit">' + //
-					'<label ng-click="edit()">' + //
-					'{{'+iAttrs.out+'}}' + //
-					'</label>' + //
-					'<i class="icon-pencil" title="Edit" ng-click="edit()"/>' + //
-					'</div>';
-					var labelElem = angular.element($(label));
+					var id = RandomService.string();
+					scope.__edit[id] = false;
+					iElement.attr('id', id);
+
 					iElement.after(labelElem);
-					$compile(labelElem)(scope);
+
+					function inside(array, target) {
+						var result = false;
+						for(var i = 0; i < array.length; i++) {
+							if(array[i] == target) {
+								result = true;
+								break;
+							};
+							if( !! array[i].children.length) {
+								result = inside(array[i].children, target);
+								if(result) {
+									break;
+								};
+							};
+						};
+						return result;
+					};
+					$(document).click(function(elem) {
+						if(scope.__edit[id]) {
+							var tar = angular.element(elem.target);
+							var parent = iElement;
+							var result = inside(parent[0].children, tar[0])||inside(labelElem[0].children, tar[0]);
+							// if(legal()) {
+								scope.__edit[id] = result;
+								// $scope.$apply();
+							// };
+						};
+					});
 				},
 				post: function(scope, iElement, iAttrs, controller) {
 					var n = 0;

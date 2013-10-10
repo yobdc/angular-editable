@@ -54,14 +54,14 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 	};
 
 	$(document).click(function(elem) {
-		if ($scope.isEdit) {
-			var tar = angular.element(elem.target);
-			var parent = angular.element($('#my'));
-			var result = inside(parent[0].children, tar[0]);
-			if (legal()) {
-				$scope.isEdit = result;
-				$scope.$apply();
-			};
-		};
+		// if ($scope.isEdit) {
+		// 	var tar = angular.element(elem.target);
+		// 	var parent = angular.element($('#my'));
+		// 	var result = inside(parent[0].children, tar[0]);
+		// 	if (legal()) {
+		// 		$scope.isEdit = result;
+		// 		$scope.$apply();
+		// 	};
+		// };
 	});
 }]);
