@@ -307,6 +307,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					});
 					labelElem.find('.icon-undo').click(function(elem) {
 						myScope.$apply(iAttrs.undo);
+						if(!validGetter(myScope)) {
+							showInput();
+						};
 					});
 
 					iElement.css({

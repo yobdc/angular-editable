@@ -23,9 +23,12 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 			address3: "新金桥路"
 		}
 	};
+	$scope.copy = angular.copy($scope.contact);
+	$scope.copy.type = $scope.contact.type;
+
 	$scope.clear = function() {
-		$scope.contact.address.address1 = null;
-		$scope.contact.address.address2 = null;
-		$scope.contact.address.address3 = null;
+		$scope.contact.address.address1 = undefined;
+		$scope.contact.address.address2 = undefined;
+		$scope.contact.address.address3 = undefined;
 	};
 }]);

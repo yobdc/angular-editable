@@ -1,5 +1,7 @@
 {{contact}}
 <hr>
+{{copy}}
+<hr>
 <div class="form-horizontal span12">
 	<div class="control-group line">
 		<label class="control-label">
@@ -7,7 +9,7 @@
 		</label>
 		<div class="controls">
 		</div>
-		<edit2 class="controls" valid="true" out="contact.type.name"  undoable="true">
+		<edit2 class="controls" valid="true" out="contact.type.name" undoable="contact.type.code!=copy.type.code" undo="contact.type=copy.type">
 			<select ng-model="contact.type" ng-options="o.name for o in types"/>
 		</edit2>
 	</div>
@@ -15,7 +17,7 @@
 		<label class="control-label">
 			Email
 		</label>
-		<edit2 class="controls" clear="contact.email=null;" valid="!!contact.email" out="contact.email">
+		<edit2 class="controls" clear="contact.email=null;" valid="!!contact.email" out="contact.email" undoable="contact.email!=copy.email" undo="contact.email=copy.email">
 			<input type="text" ng-model="contact.email">
 		</edit2>
 	</div>
@@ -23,7 +25,7 @@
 		<label class="control-label">
 			Phone
 		</label>
-		<edit2 class="controls" clear="contact.phone=null;" valid="!!contact.phone" out="contact.phone">
+		<edit2 class="controls" clear="contact.phone=null;" valid="!!contact.phone" out="contact.phone" out="contact.phone" undoable="contact.phone!=copy.phone" undo="contact.phone=copy.phone">
 			<input type="text" ng-model="contact.phone">
 		</edit2>
 	</div>
@@ -31,7 +33,7 @@
 		<label class="control-label">
 			<select style="width:70px;" ng-model="contact.type" ng-options="o.name for o in types"/>
 		</label>
-		<edit2 class="controls" clear="clear()" valid="contact.address.address1&&contact.address.address2&&contact.address.address3" out="contact.address.address1+contact.address.address2+contact.address.address3" undoable="true" undo="contact.address.address1='zzz'">
+		<edit2 class="controls" clear="clear()" valid="contact.address.address1||contact.address.address2||contact.address.address3" out="contact.address.address1+contact.address.address2+contact.address.address3" undoable="true" undo="contact.address=angular.copy(copy.address)">
 			<input type="text" ng-model="contact.address.address1">
 			<input type="text" ng-model="contact.address.address2">
 			<input type="text" ng-model="contact.address.address3">
