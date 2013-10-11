@@ -291,7 +291,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					var myScope = scope;
 
 					var label = '<div class="controls">' + //
-					'<label ng-click="edit()">' + //
+					'<label class="showlabel">'+ //
 					'{{' + iAttrs.out + '}}' + //
 					'</label>' + //
 					'<i class="icon-pencil" title="Edit"/>' + //
@@ -360,18 +360,29 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						var tar = angular.element(elem.target);
 						var parent = iElement;
 						var result = inside(parent[0].children, tar[0]) || inside(labelElem[0].children, tar[0]);
-						// if(legal()) {
 						if(result) {
 							showInput();
 						} else {
 							hideInput();
 						};
-						// };
 					});
 				},
 				post: function(scope, iElement, iAttrs, controller) {
-					var n = 0;
-					console.log('edit2 postlink');
+					function showInput() {
+						labelElem.css({
+							display: 'none'
+						});
+						iElement.css({
+							display: 'block'
+						});
+					};
+
+					var validGetter = $parse(iAttrs.valid);
+					var labelElem = iElement.parent().find('.showlabel').parent();
+					if (!validGetter(scope)) {
+						showInput();
+					};
+
 				}
 			}
 		},
