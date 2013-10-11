@@ -1,68 +1,40 @@
 {{contact}}
 <hr>
-<div class="form-horizontal">
+<div class="form-horizontal span8">
 	<div class="control-group line">
 		<label class="control-label">
 			Type
 		</label>
 		<div class="controls">
+		</div>
+		<edit2 class="controls" clear="" valid="true" out="contact.type.name">
 			<select ng-model="contact.type" ng-options="o.name for o in types"/>
-		</div>
-	</div>
-	<div class="control-group line">
-		<label class="control-label">
-			Email
-		</label>
-		<div class="controls">
-			<input type="text" ng-model="contact.email">
-		</div>
-	</div>
-	<div class="control-group line">
-		<label class="control-label">
-			Phone
-		</label>
-		<div class="controls">
-			<input type="text" ng-model="contact.phone">
-		</div>
-	</div>
-	<div id="my" class="control-group line">
-		<label class="control-label">
-			<select style="width:70px;" ng-model="contact.type" ng-options="o.name for o in types"/>
-		</label>
-		<div class="controls" ng-show="!isEdit">
-			<label ng-click="edit()">
-				{{contact.address.address1+contact.address.address2+contact.address.address3}}
-			</label>
-			<i class="icon-pencil" title="Edit" ng-click="edit()"/>
-		</div>
-		<div class="controls"  ng-show="isEdit">
-			<input type="text" ng-model="contact.address.address1">
-			<input type="text" ng-model="contact.address.address2">
-			<input type="text" ng-model="contact.address.address3">
-			<i class="icon-trash" title="Delete" ng-click="clear()"/>
-		</div>
-	</div>
-</div>
-<hr>
-isEdit={{isEdit}}
-<hr>
-<div class="form-horizontal">
-	<div class="control-group line">
-		<label class="control-label">
-			Address
-		</label>
-		<edit2 class="controls" clear="clear()" valid="contact.address.address1&&contact.address.address2&&contact.address.address3" out="contact.address.address1+contact.address.address2+contact.address.address3">
-			<input type="text" ng-model="contact.address.address1">
-			<input type="text" ng-model="contact.address.address2">
-			<input type="text" ng-model="contact.address.address3">
 		</edit2>
 	</div>
 	<div class="control-group line">
 		<label class="control-label">
 			Email
 		</label>
-		<edit2 class="controls" valid="contact.email" out="contact.email">
+		<edit2 class="controls" clear="contact.email=null;" valid="!!contact.email" out="contact.email">
 			<input type="text" ng-model="contact.email">
+		</edit2>
+	</div>
+	<div class="control-group line">
+		<label class="control-label">
+			Phone
+		</label>
+		<edit2 class="controls" clear="contact.phone=null;" valid="!!contact.phone" out="contact.phone">
+			<input type="text" ng-model="contact.phone">
+		</edit2>
+	</div>
+	<div id="my" class="control-group line">
+		<label class="control-label">
+			<select style="width:70px;" ng-model="contact.type" ng-options="o.name for o in types"/>
+		</label>
+		<edit2 class="controls" clear="clear()" valid="contact.address.address1&&contact.address.address2&&contact.address.address3" out="contact.address.address1+contact.address.address2+contact.address.address3">
+			<input type="text" ng-model="contact.address.address1">
+			<input type="text" ng-model="contact.address.address2">
+			<input type="text" ng-model="contact.address.address3">
 		</edit2>
 	</div>
 </div>
