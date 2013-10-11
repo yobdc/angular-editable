@@ -120,3 +120,6 @@ background-color: #ffffff;
 border: 1px solid #cccccc;
 padding:0px 6px;
 }
+.line .bold {
+  font-weight:bold;
+}

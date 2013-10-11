@@ -330,6 +330,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					};
 
 					var validGetter = $parse(iAttrs.valid);
+					var undoableGetter = $parse(iAttrs.undoable);
 
 					function showInput() {
 						labelElem.css({
@@ -349,6 +350,9 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 							iElement.css({
 								display: 'none'
 							});
+							if (undoableGetter(myScope)) {
+								iElement.find('.showlabel').addClass('bold');
+							};
 						};
 					};
 
