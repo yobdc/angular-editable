@@ -335,7 +335,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						iElement.css({
 							display: 'block'
 						});
-						iElement.find('input').focus();
+						iElement.find('input,textarea,select').filter(':visible:first').focus();
 					};
 
 					function hideInput() {
@@ -387,7 +387,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						iElement.css({
 							display: 'block'
 						});
-						iElement.find('input').focus();
+						iElement.find('input,textarea,select').filter(':visible:first').focus();
 					};
 
 					var validGetter = $parse(iAttrs.valid);
