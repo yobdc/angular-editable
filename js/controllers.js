@@ -31,4 +31,8 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 		$scope.contact.address.address2 = undefined;
 		$scope.contact.address.address3 = undefined;
 	};
+
+	$scope.copy2 = function() {
+		$scope.contact.address = angular.copy($scope.copy.address);
+	};
 }]);

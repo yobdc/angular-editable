@@ -33,7 +33,7 @@
 		<label class="control-label">
 			<select style="width:70px;" ng-model="contact.type" ng-options="o.name for o in types"/>
 		</label>
-		<edit2 class="controls" clear="clear()" valid="contact.address.address1||contact.address.address2||contact.address.address3" out="contact.address.address1+contact.address.address2+contact.address.address3" undoable="true" undo="contact.address=angular.copy(copy.address)">
+		<edit2 class="controls" clear="clear()" valid="contact.address.address1||contact.address.address2||contact.address.address3" out="contact.address.address1+contact.address.address2+contact.address.address3" undoable="true" undo="copy2()">
 			<input type="text" ng-model="contact.address.address1">
 			<input type="text" ng-model="contact.address.address2">
 			<input type="text" ng-model="contact.address.address3">
