@@ -281,14 +281,13 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			});
 		});
 	}
-}]).directive('edit2', ['$compile', 'RandomService', function($compile, RandomService) {
+}]).directive('edit2', ['$compile', '$parse', function($compile, $parse) {
 	return {
 		restrict: 'E',
 		scope: false,
 		compile: function compile(tElement, tAttrs, transclude) {
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
-					scope.__edit = scope.__edit || {};
 					var label = '<div class="controls">' + //
 					'<label ng-click="edit()">' + //
 					'{{' + iAttrs.out + '}}' + //
@@ -307,9 +306,6 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					iElement.css({
 						display: "none"
 					});
-					var id = RandomService.string();
-					scope.__edit[id] = false;
-					iElement.attr('id', id);
 
 					var trashElem = angular.element($('<i class="icon-trash" title="Delete" ng-click="clear()"/>'));
 					iElement.append(trashElem);
