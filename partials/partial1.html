@@ -51,7 +51,7 @@ isEdit={{isEdit}}
 		<label class="control-label">
 			Address
 		</label>
-		<edit2 class="controls" valid="true" out="contact.address.address1+contact.address.address2+contact.address.address3">
+		<edit2 class="controls" clear="clear()" valid="contact.address.address1&&contact.address.address2&&contact.address.address3" out="contact.address.address1+contact.address.address2+contact.address.address3">
 			<input type="text" ng-model="contact.address.address1">
 			<input type="text" ng-model="contact.address.address2">
 			<input type="text" ng-model="contact.address.address3">
@@ -61,7 +61,7 @@ isEdit={{isEdit}}
 		<label class="control-label">
 			Email
 		</label>
-		<edit2 class="controls" valid="true" out="contact.email">
+		<edit2 class="controls" valid="contact.email" out="contact.email">
 			<input type="text" ng-model="contact.email">
 		</edit2>
 	</div>

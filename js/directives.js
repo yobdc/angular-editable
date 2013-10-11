@@ -288,6 +288,8 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		compile: function compile(tElement, tAttrs, transclude) {
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
+					var myScope = scope;
+
 					var label = '<div class="controls">' + //
 					'<label ng-click="edit()">' + //
 					'{{' + iAttrs.out + '}}' + //
@@ -309,8 +311,15 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 
 					var trashElem = angular.element($('<i class="icon-trash" title="Delete" ng-click="clear()"/>'));
 					iElement.append(trashElem);
-
 					iElement.after(labelElem);
+
+					var clearExp = iAttrs.clear;
+					trashElem.click(function(elem) {
+						myScope.$apply(clearExp);
+					});
+
+					var validGetter = $parse(iAttrs.valid);
+
 					function showInput() {
 						labelElem.css({
 							display: 'none'
@@ -319,14 +328,18 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 							display: 'block'
 						});
 					};
+
 					function hideInput() {
-						labelElem.css({
-							display: 'block'
-						});
-						iElement.css({
-							display: 'none'
-						});
+						if(validGetter(myScope)) {
+							labelElem.css({
+								display: 'block'
+							});
+							iElement.css({
+								display: 'none'
+							});
+						};
 					};
+
 					function inside(array, target) {
 						var result = false;
 						for(var i = 0; i < array.length; i++) {
