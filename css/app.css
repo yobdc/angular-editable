@@ -1,88 +1,102 @@
- app css stylesheet */
+app css stylesheet */
 
 .menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
 }
 
 .menu:before {
-  content: "[";
+    content: "[";
 }
 
 .menu:after {
-  content: "]";
+    content: "]";
 }
 
 .menu > li {
-  display: inline;
+    display: inline;
 }
 
 .menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+    content: "|";
+    padding-right: 0.3em;
 }
 
 .menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+    content: "";
+    padding: 0;
 }
-.showme{ 
-display: none;
+
+.showme {
+    display: none;
 }
-.showhim:hover .showme{
-display : inline;
+
+.showhim:hover .showme {
+    display: inline;
 /*float: right;*/
 }
-.line{
-height:24px;
+
+.line {
+    height: 24px;
 }
+
 .line:hover {
-  background-color: #F0F0F0;
+    background-color: #F0F0F0;
 }
+
 .line .icon-trash {
-  display: none;
+    display: none;
 }
+
 .line .icon-undo {
-  display: none;
+    display: none;
 }
+
 .line .icon-pencil {
-  display: none;
+    display: none;
 }
+
 .line:hover .icon-pencil {
-  display: inline;
-  float: right;
-  margin: 7px 10px auto auto;
+    display: inline;
+    float: right;
+    margin: 7px 10px auto auto;
 }
+
 .line:hover .icon-undo {
-  display: inline;
-  float: right;
-  margin: 7px 10px auto auto;
+    display: inline;
+    float: right;
+    margin: 7px 10px auto auto;
 }
+
 .line input:focus~.icon-trash {
-  display: inline;
+    display: inline;
   /*float: right;*/
-  margin: 7px 10px auto auto;
+    margin: 7px 10px auto auto;
 }
+
 .line select:focus~.icon-trash {
-  display: inline;
+    display: inline;
   /*float: right;*/
-  margin: 7px 10px auto auto;
+    margin: 7px 10px auto auto;
 }
+
 .line textarea:focus~.icon-trash {
-  display: inline;
+    display: inline;
   /*float: right;*/
-  margin: 7px 10px auto auto;
+    margin: 7px 10px auto auto;
 }
+
 .line .icon-trash:hover {
-  display: inline;
+    display: inline;
   /*float: right;*/
-  margin: 7px 10px auto auto;
+    margin: 7px 10px auto auto;
 }
+
 .line .controls label {
-  display: inline-block;
-  margin:0px;
+    display: inline-block;
+    margin: 0px;
 }
 /*.line .controls label:hover {
   background-color: #FFF;
@@ -93,33 +107,39 @@ height:24px;
     appearance: none;
     padding: 0px 2px;
     border: none;
-    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+    background: transparent url("../img/arrow_down.gif") no-repeat right center;
 }
+
 .line label select {
-     color:#000;
+    color: #000;
     -webkit-appearance: none;
-   -moz-appearance: none;
+    -moz-appearance: none;
     appearance: none;
     padding: 0px 2px;
     border: none;
     background: transparent;
     width: auto;
+    margin: 0px -5px 0px 0px;
+    width:50px;
 }
 
-.line .showlabel{
-height:24px;
-line-height:24px;
-border:none;
-padding:0px 7px;
+.line .showlabel {
+    height: 24px;
+    line-height: 24px;
+    border: none;
+    padding: 0px 7px;
 }
-.line .showlabel:hover
- {
-height:22px;
-line-height:22px;
-background-color: #ffffff;
-border: 1px solid #cccccc;
-padding:0px 6px;
+
+.line .showlabel:hover {
+    height: 22px;
+    line-height: 22px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 0px 6px;
 }
+
 .line .bold {
-  font-weight:bold;
+    font-weight: bold;
 }
+
+
