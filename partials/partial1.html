@@ -7,20 +7,24 @@
 		<label class="control-label">
 			Type
 		</label>
-		<div class="controls">
-		</div>
 		<edit2 class="controls" valid="true" out="contact.type.name" undoable="contact.type.code!=copy.type.code" undo="contact.type=copy.type">
 			<select ng-model="contact.type" ng-options="o.name for o in types">
 			</select>
 		</edit2>
 	</div>
-	<div class="control-group line">
-		<label class="control-label">
-			Email
+	<div class="control-group line" ng-repeat="email in contact.emails">
+		<label class="control-label">			
+			<select ng-model="email.type" ng-options="o.name for o in types">
+			</select>
 		</label>
-		<edit2 class="controls" clear="contact.email=null;" valid="!!contact.email" out="contact.email" undoable="contact.email!=copy.email" undo="contact.email=copy.email">
-			<input type="text" ng-model="contact.email">
+		<edit2 class="controls" clear="removeEmail($index);" valid="!!email.name" out="email.name" undoable="contact.email!=copy.email" undo="contact.email=copy.email">
+			<input type="text" ng-model="email.name">
 		</edit2>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<a ng-click="addEmail()">Add</a>
+		</div>
 	</div>
 	<div class="control-group line">
 		<label class="control-label">
