@@ -291,10 +291,11 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					var myScope = scope;
 
 					var label = '<div class="controls">' + //
-					'<label class="showlabel">'+ //
+					'<label class="showlabel">' + //
 					'{{' + iAttrs.out + '}}' + //
 					'</label>' + //
 					'<i class="icon-pencil" title="Edit"/>' + //
+					'<i class="icon-undo" title="Undo" ng-show="' + iAttrs.undoable + '"/>'+//
 					'</div>';
 					var labelElem = angular.element($(label));
 					$compile(labelElem)(scope);
@@ -304,17 +305,22 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					labelElem.find('.icon-pencil').click(function(elem) {
 						showInput();
 					});
+					labelElem.find('.icon-undo').click(function(elem) {
+						myScope.$apply(iAttrs.undo);
+					});
 
 					iElement.css({
 						display: "none"
 					});
 
-					var trashElem = angular.element($('<i class="icon-trash" title="Delete" ng-click="clear()"/>'));
-					iElement.append(trashElem);
+					var tailHtml = '<i class="icon-trash" title="Delete"/>';
+					var tailElem = angular.element($(tailHtml));
+					$compile(tailElem)(scope);
+					iElement.append(tailElem);
 					iElement.after(labelElem);
 
 					var clearExp = iAttrs.clear;
-					trashElem.click(function(elem) {
+					tailElem.parent().find('.icon-trash').click(function(elem) {
 						myScope.$apply(clearExp);
 					});
 
@@ -327,6 +333,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						iElement.css({
 							display: 'block'
 						});
+						iElement.find('input').focus();
 					};
 
 					function hideInput() {
@@ -361,13 +368,16 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						var parent = iElement;
 						var result = inside(parent[0].children, tar[0]) || inside(labelElem[0].children, tar[0]);
 						if(result) {
-							showInput();
+							// showInput();
 						} else {
 							hideInput();
 						};
 					});
 				},
 				post: function(scope, iElement, iAttrs, controller) {
+					var myAttrs = iAttrs;
+					var myScope = scope;
+
 					function showInput() {
 						labelElem.css({
 							display: 'none'
@@ -375,14 +385,14 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						iElement.css({
 							display: 'block'
 						});
+						iElement.find('input').focus();
 					};
 
 					var validGetter = $parse(iAttrs.valid);
 					var labelElem = iElement.parent().find('.showlabel').parent();
-					if (!validGetter(scope)) {
+					if(!validGetter(scope)) {
 						showInput();
 					};
-
 				}
 			}
 		},

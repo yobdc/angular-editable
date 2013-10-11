@@ -42,6 +42,9 @@ display : inline;
 .line .icon-trash {
   display: none;
 }
+.line .icon-undo {
+  display: none;
+}
 .line .icon-pencil {
   display: none;
 }
@@ -50,14 +53,24 @@ display : inline;
   float: right;
   margin: 7px 10px auto auto;
 }
-.line input:focus~.icon-trash {
+.line:hover .icon-undo {
   display: inline;
   float: right;
   margin: 7px 10px auto auto;
 }
+.line input:focus~.icon-trash {
+  display: inline;
+  /*float: right;*/
+  margin: 7px 10px auto auto;
+}
 .line .icon-trash:hover {
   display: inline;
-  float: right;
+  /*float: right;*/
+  margin: 7px 10px auto auto;
+}
+.line select:focus~.icon-trash {
+  display: inline;
+  /*float: right;*/
   margin: 7px 10px auto auto;
 }
 .line .controls label {
