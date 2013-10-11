@@ -35,7 +35,9 @@ display: none;
 display : inline;
 /*float: right;*/
 }
-
+.line{
+height:24px;
+}
 .line:hover {
   background-color: #F0F0F0;
 }
@@ -79,8 +81,8 @@ display : inline;
   margin: 7px 10px auto auto;
 }
 .line .controls label {
-  padding-top: 5px;
   display: inline-block;
+  margin:0px;
 }
 /*.line .controls label:hover {
   background-color: #FFF;
@@ -89,18 +91,32 @@ display : inline;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding: 2px 30px 2px 2px;
+    padding: 0px 2px;
     border: none;
     background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
 }
 .line label select {
+     color:#000;
     -webkit-appearance: none;
    -moz-appearance: none;
     appearance: none;
-    padding: 2px 30px 2px 2px;
+    padding: 0px 2px;
     border: none;
     background: transparent;
+    width: auto;
 }
 
-.line .showlabel {
+.line .showlabel{
+height:24px;
+line-height:24px;
+border:none;
+padding:0px 7px;
+}
+.line .showlabel:hover
+ {
+height:22px;
+line-height:22px;
+background-color: #ffffff;
+border: 1px solid #cccccc;
+padding:0px 6px;
 }
