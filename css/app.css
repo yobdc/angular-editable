@@ -63,12 +63,17 @@ display : inline;
   /*float: right;*/
   margin: 7px 10px auto auto;
 }
-.line .icon-trash:hover {
+.line select:focus~.icon-trash {
   display: inline;
   /*float: right;*/
   margin: 7px 10px auto auto;
 }
-.line select:focus~.icon-trash {
+.line textarea:focus~.icon-trash {
+  display: inline;
+  /*float: right;*/
+  margin: 7px 10px auto auto;
+}
+.line .icon-trash:hover {
   display: inline;
   /*float: right;*/
   margin: 7px 10px auto auto;

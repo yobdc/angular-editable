@@ -295,7 +295,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					'{{' + iAttrs.out + '}}' + //
 					'</label>' + //
 					'<i class="icon-pencil" title="Edit"/>' + //
-					'<i class="icon-undo" title="Undo" ng-show="' + iAttrs.undoable + '"/>'+//
+					'<i class="icon-undo" title="Undo" ng-show="' + iAttrs.undoable + '"/>' + //
 					'</div>';
 					var labelElem = angular.element($(label));
 					$compile(labelElem)(scope);
@@ -313,16 +313,18 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						display: "none"
 					});
 
-					var tailHtml = '<i class="icon-trash" title="Delete"/>';
-					var tailElem = angular.element($(tailHtml));
-					$compile(tailElem)(scope);
-					iElement.append(tailElem);
 					iElement.after(labelElem);
 
-					var clearExp = iAttrs.clear;
-					tailElem.parent().find('.icon-trash').click(function(elem) {
-						myScope.$apply(clearExp);
-					});
+					if(iAttrs.clear) {
+						var tailHtml = '<i class="icon-trash" title="Delete"/>';
+						var tailElem = angular.element($(tailHtml));
+						$compile(tailElem)(scope);
+						iElement.append(tailElem);
+						var clearExp = iAttrs.clear;
+						tailElem.parent().find('.icon-trash').click(function(elem) {
+							myScope.$apply(clearExp);
+						});
+					};
 
 					var validGetter = $parse(iAttrs.valid);
 
