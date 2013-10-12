@@ -37,6 +37,7 @@ app css stylesheet */
     display: inline;
 /*float: right;*/
 }
+/************************/
 
 .line {
     height: 24px;
@@ -46,7 +47,7 @@ app css stylesheet */
     background-color: #F0F0F0;
 }
 
-.line .icon-trash {
+.line .tailtrash {
     display: none;
 }
 
@@ -70,25 +71,25 @@ app css stylesheet */
     margin: 7px 10px auto auto;
 }
 
-.line input:focus~.icon-trash {
+.line input:focus~.tailtrash {
     display: inline;
   /*float: right;*/
     margin: 7px 10px auto auto;
 }
 
-.line select:focus~.icon-trash {
+.line select:focus~.tailtrash {
     display: inline;
   /*float: right;*/
     margin: 7px 10px auto auto;
 }
 
-.line textarea:focus~.icon-trash {
+.line textarea:focus~.tailtrash {
     display: inline;
   /*float: right;*/
     margin: 7px 10px auto auto;
 }
 
-.line .icon-trash:hover {
+.line .tailtrash:hover {
     display: inline;
   /*float: right;*/
     margin: 7px 10px auto auto;
@@ -120,7 +121,7 @@ app css stylesheet */
     background: transparent;
     width: auto;
     margin: 0px -5px 0px 0px;
-    width:50px;
+    width: 50px;
 }
 
 .line .showlabel {
@@ -142,4 +143,16 @@ app css stylesheet */
     font-weight: bold;
 }
 
+.linehigh:hover {
+    background-color: #FAD7E0;
+}
 
+.linehigh .icon-pencil {
+    display: none;
+}
+
+.linehigh:hover .icon-pencil {
+    display: inline;
+    float: right;
+    margin: 5px 10px auto auto;
+}

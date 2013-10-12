@@ -298,6 +298,12 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					'<i class="icon-undo" title="Undo" ng-show="' + iAttrs.undoable + '"/>' + //
 					'</div>';
 					var labelElem = angular.element($(label));
+					iElement.find('.copytail').click(function(elem) {
+						if(!validGetter(myScope)) {
+							showInput();
+						};
+					});
+					labelElem.find('.showlabel').after(iElement.find('.copytail'));
 					$compile(labelElem)(scope);
 					labelElem.find('label').click(function(elem) {
 						showInput();
@@ -319,12 +325,12 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					iElement.after(labelElem);
 
 					if(iAttrs.clear) {
-						var tailHtml = '<i class="icon-trash" title="Delete"/>';
+						var tailHtml = '<i class="icon-trash tailtrash" title="Delete"/>';
 						var tailElem = angular.element($(tailHtml));
 						$compile(tailElem)(scope);
 						iElement.append(tailElem);
 						var clearExp = iAttrs.clear;
-						tailElem.parent().find('.icon-trash').click(function(elem) {
+						tailElem.parent().find('.tailtrash').click(function(elem) {
 							myScope.$apply(clearExp);
 						});
 					};
@@ -350,7 +356,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 							iElement.css({
 								display: 'none'
 							});
-							if (undoableGetter(myScope)) {
+							if(undoableGetter(myScope)) {
 								iElement.find('.showlabel').addClass('bold');
 							};
 						};
@@ -381,6 +387,10 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						} else {
 							hideInput();
 						};
+					});
+
+					myScope.$on('hide', function(){
+						hideInput();
 					});
 				},
 				post: function(scope, iElement, iAttrs, controller) {
