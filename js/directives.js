@@ -281,7 +281,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			});
 		});
 	}
-}]).directive('edit2', ['$compile', '$parse', function($compile, $parse) {
+}])..directive('edit2', ['$compile', '$parse', function($compile, $parse) {
 	return {
 		restrict: 'E',
 		scope: false,
@@ -289,6 +289,11 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
 					var myScope = scope;
+					var block = 'block';
+
+					if(iAttrs.hasOwnProperty('inline')) {
+						block = 'inline-block';
+					};
 
 					var label = '<div class="controls">' + //
 					'<label class="showlabel">' + //
@@ -339,15 +344,23 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					var undoableGetter = $parse(iAttrs.undoable);
 
 					function showInput() {
-						labelElem.hide();
-						iElement.show();
+						labelElem.css({
+							display: 'none'
+						});
+						iElement.css({
+							display: block
+						});
 						iElement.find('input,textarea,select').filter(':visible:first').focus();
 					};
 
 					function hideInput() {
 						if(validGetter(myScope)) {
-							labelElem.show();
-							iElement.hide();
+							labelElem.css({
+								display: block
+							});
+							iElement.css({
+								display: 'none'
+							});
 							if(undoableGetter(myScope)) {
 								iElement.find('.showlabel').addClass('bold');
 							};
@@ -381,17 +394,26 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						};
 					});
 
-					myScope.$on('hide', function(){
+					myScope.$on('hide', function() {
 						hideInput();
 					});
 				},
 				post: function(scope, iElement, iAttrs, controller) {
 					var myAttrs = iAttrs;
 					var myScope = scope;
+					var block = 'block';
+
+					if(iAttrs.hasOwnProperty('inline')) {
+						block = 'inline-block';
+					};
 
 					function showInput() {
-						labelElem.hide();
-						iElement.show();
+						labelElem.css({
+							display: 'none'
+						});
+						iElement.css({
+							display: block
+						});
 						iElement.find('input,textarea,select').filter(':visible:first').focus();
 					};
 
