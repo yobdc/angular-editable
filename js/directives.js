@@ -339,23 +339,15 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					var undoableGetter = $parse(iAttrs.undoable);
 
 					function showInput() {
-						labelElem.css({
-							display: 'none'
-						});
-						iElement.css({
-							display: 'block'
-						});
+						labelElem.hide();
+						iElement.show();
 						iElement.find('input,textarea,select').filter(':visible:first').focus();
 					};
 
 					function hideInput() {
 						if(validGetter(myScope)) {
-							labelElem.css({
-								display: 'block'
-							});
-							iElement.css({
-								display: 'none'
-							});
+							labelElem.show();
+							iElement.hide();
 							if(undoableGetter(myScope)) {
 								iElement.find('.showlabel').addClass('bold');
 							};
@@ -398,12 +390,8 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					var myScope = scope;
 
 					function showInput() {
-						labelElem.css({
-							display: 'none'
-						});
-						iElement.css({
-							display: 'block'
-						});
+						labelElem.hide();
+						iElement.show();
 						iElement.find('input,textarea,select').filter(':visible:first').focus();
 					};
 
