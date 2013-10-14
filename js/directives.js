@@ -281,7 +281,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 			});
 		});
 	}
-}])..directive('edit2', ['$compile', '$parse', function($compile, $parse) {
+}]).directive('edit2', ['$compile', '$parse', function($compile, $parse) {
 	return {
 		restrict: 'E',
 		scope: false,
@@ -356,7 +356,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					function hideInput() {
 						if(validGetter(myScope)) {
 							labelElem.css({
-								display: block
+								display: 'block'
 							});
 							iElement.css({
 								display: 'none'
