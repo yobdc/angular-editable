@@ -11,7 +11,7 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 		name: '家庭'
 	}, {
 		code: 'O',
-		name: '办公'
+		name: '办公室'
 	}];
 
 	$timeout(function() {

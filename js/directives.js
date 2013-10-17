@@ -427,4 +427,18 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		},
 		controller: function($scope, $element, $attrs, $transclude) {}
 	};
+}]).directive('selectAutoWide', [function($parse) {
+	return function(scope, element, attr) {
+		var myElement = element;
+		scope.$watch(attr.ngModel, function(newValue, oldValue) {
+			if( !! newValue) {
+				var label = newValue[attr['selectAutoWide']];
+				if( !! label && !! label.length) {
+					myElement.css({
+						width: label.length * 20 + 'px'
+					});
+				};
+			};
+		});
+	};
 }]);

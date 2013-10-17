@@ -14,7 +14,7 @@
 	</div>
 	<div class="control-group line" ng-repeat="email in contact.emails">
 		<label class="control-label">			
-			<select ng-model="email.type" ng-options="o.name for o in types">
+			<select ng-model="email.type" ng-options="o.name for o in types" select-auto-wide='name'>
 			</select>
 		</label>
 		<edit2 class="controls" clear="removeEmail($index);" valid="!!email.name" out="email.name" undoable="contact.email!=copy.email" undo="contact.email=copy.email">
