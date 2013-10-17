@@ -40,56 +40,25 @@ app css stylesheet */
 /************************/
 
 .line {
-    height: 24px;
+    min-height: 24px;
+    height: auto;
 }
 
 .line:hover {
-    background-color: #F0F0F0;
+    background-color: #ffdbdb;
 }
 
-.line .tailtrash {
+.line .tailtrash, .line .icon-undo,.line .icon-pencil,.line .icon-lock,.line .icon-lock {
     display: none;
 }
 
-.line .icon-undo {
-    display: none;
-}
-
-.line .icon-pencil {
-    display: none;
-}
-
-.line:hover .icon-pencil {
+.line:hover .icon-pencil,.line:hover .icon-undo,.line:hover .icon-lock,.line:hover .icon-pencil {
     display: inline;
     float: right;
     margin: 7px 10px auto auto;
 }
 
-.line:hover .icon-undo {
-    display: inline;
-    float: right;
-    margin: 7px 10px auto auto;
-}
-
-.line input:focus~.tailtrash {
-    display: inline;
-  /*float: right;*/
-    margin: 7px 10px auto auto;
-}
-
-.line select:focus~.tailtrash {
-    display: inline;
-  /*float: right;*/
-    margin: 7px 10px auto auto;
-}
-
-.line textarea:focus~.tailtrash {
-    display: inline;
-  /*float: right;*/
-    margin: 7px 10px auto auto;
-}
-
-.line .tailtrash:hover {
+.line input:focus~.tailtrash,.line select:focus~.tailtrash ,.line textarea:focus~.tailtrash,.line .tailtrash:hover {
     display: inline;
   /*float: right;*/
     margin: 7px 10px auto auto;
@@ -111,6 +80,15 @@ app css stylesheet */
     background: transparent url("../img/arrow_down.gif") no-repeat right center;
 }
 
+.line label select:focus {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0px 2px;
+    border: none;
+    background: #FFF url("../img/arrow_down.gif") no-repeat right center;
+}
+
 .line label select {
     color: #000;
     -webkit-appearance: none;
@@ -121,10 +99,18 @@ app css stylesheet */
     background: transparent;
     width: auto;
     margin: 0px -5px 0px 0px;
-    width: 50px;
+    min-width: 45px;
+    width: auto;
 }
 
 .line .showlabel {
+    height: 24px;
+    line-height: 24px;
+    border: none;
+    padding: 0px 7px;
+}
+
+.line .locklabel {
     height: 24px;
     line-height: 24px;
     border: none;
@@ -143,16 +129,82 @@ app css stylesheet */
     font-weight: bold;
 }
 
+.re-bg {
+    background: transparent !important;
+}
+/*
 .linehigh:hover {
-    background-color: #FAD7E0;
+    background-color: #ffdbdb;
 }
 
 .linehigh .icon-pencil {
     display: none;
 }
+.linehigh .icon-lock {
+    display: none;
+}
 
-.linehigh:hover .icon-pencil {
+.linehigh:hover .icon-lock {
     display: inline;
     float: right;
     margin: 5px 10px auto auto;
 }
+.linehigh:hover .icon-pencil{
+    display: inline;
+    float: right;
+    margin: 5px 10px auto auto;
+}
+*/
+select {
+    padding: 0px 0px 0px 6px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 0px;
+}
+
+.controls span {
+    vertical-align: middle;
+}
+
+.input-append input, .input-append select, .input-append .uneditable-input {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.re-btn {
+    color: #0088c9;
+    margin-left: -18px !important;
+    z-index: 2;
+    position: relative;
+    background: transparent;
+    height: 24px;
+    width: 18px;
+    border: none;
+    padding: 0px;
+}
+
+.re-btn:hover,.re-btn:active,.re-btn:after {
+    color: #2e71a5;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.re-large {
+    *width: 206px;
+    width: 194px;
+    padding-right: 18px !important;
+}
+
+.re-small {
+    width: 71px;
+    padding-right: 18px !important;
+}
+
+.btn-mini .caret, .btn-small .caret {
+    margin-top: -4px;
+}
+
+
