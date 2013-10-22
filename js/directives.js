@@ -288,6 +288,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 		compile: function compile(tElement, tAttrs, transclude) {
 			return {
 				pre: function(scope, iElement, iAttrs, controller) {
+					iAttrs.valid = 'true';
 					var myScope = scope;
 					var block = 'block';
 
@@ -321,7 +322,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						if(!validGetter(myScope)) {
 							showInput();
 						};
-						iElement.parent().find('.showlabel').css('font-weight','');
+						iElement.parent().find('.showlabel').css('font-weight', '');
 					});
 
 					iElement.css({
@@ -343,6 +344,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 
 					var validGetter = $parse(iAttrs.valid);
 					var undoableGetter = $parse(iAttrs.undoable);
+					var outGetter = $parse(iAttrs.out);
 
 					function showInput() {
 						labelElem.css({
@@ -369,6 +371,18 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 							} else {
 								iElement.parent().find('.showlabel').css({
 									'font-weight': ''
+								});
+							};
+							var word = outGetter(myScope);
+							if( !! word == false || !! word.length == false) {
+								iElement.parent().find('.showlabel').css({
+									'background-color':'transparent',
+									'border':'0px'
+								});
+							} else {
+								iElement.parent().find('.showlabel').css({
+									'background-color':'',
+									'border':''
 								});
 							};
 						};
@@ -406,6 +420,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					});
 				},
 				post: function(scope, iElement, iAttrs, controller) {
+					iAttrs.valid = 'true';
 					var myAttrs = iAttrs;
 					var myScope = scope;
 					var block = 'block';
