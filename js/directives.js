@@ -321,6 +321,7 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 						if(!validGetter(myScope)) {
 							showInput();
 						};
+						iElement.parent().find('.showlabel').css('font-weight','');
 					});
 
 					iElement.css({
@@ -356,13 +357,19 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					function hideInput() {
 						if(validGetter(myScope)) {
 							labelElem.css({
-								display: 'block'
+								display: 'block',
 							});
 							iElement.css({
 								display: 'none'
 							});
 							if(undoableGetter(myScope)) {
-								iElement.find('.showlabel').addClass('bold');
+								iElement.parent().find('.showlabel').css({
+									'font-weight': 'bold'
+								});
+							} else {
+								iElement.parent().find('.showlabel').css({
+									'font-weight': ''
+								});
 							};
 						};
 					};
