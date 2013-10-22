@@ -420,30 +420,42 @@ angular.module('myApp.directives', []).directive('editable', ['$compile', 'Rando
 					});
 				},
 				post: function(scope, iElement, iAttrs, controller) {
-					iAttrs.valid = 'true';
-					var myAttrs = iAttrs;
-					var myScope = scope;
-					var block = 'block';
+                    var myAttrs = iAttrs;
+                    var myScope = scope;
+                    var block = 'block';
 
-					if(iAttrs.hasOwnProperty('inline')) {
-						block = 'inline-block';
-					};
+                    if (iAttrs.hasOwnProperty('inline')) {
+                        block = 'inline-block';
+                    };
 
-					function showInput() {
-						labelElem.css({
-							display: 'none'
-						});
-						iElement.css({
-							display: block
-						});
-						iElement.find('input,textarea,select').filter(':visible:first').focus();
-					};
+                    function showInput() {
+                        labelElem.css({
+                            display: 'none'
+                        });
+                        iElement.css({
+                            display: block
+                        });
+                        iElement.find('input,textarea,select').filter(':visible:first').focus();
+                    };
 
-					var validGetter = $parse(iAttrs.valid);
-					var labelElem = iElement.parent().find('.showlabel').parent();
-					if(!validGetter(scope)) {
-						showInput();
-					};
+                    var validGetter = $parse(iAttrs.valid);
+                    var outGetter = $parse(iAttrs.out);
+                    var labelElem = iElement.parent().find('.showlabel').parent();
+                    if(!validGetter(scope)) {
+                        showInput();
+                    };
+                    var word = outGetter(myScope);
+                    if( !! word == false || !! word.length == false) {
+                        iElement.parent().find('.showlabel').css({
+                            'background-color':'transparent',
+                            'border':'0px'
+                        });
+                    } else {
+                        iElement.parent().find('.showlabel').css({
+                            'background-color':'',
+                            'border':''
+                        });
+                    };
 				}
 			}
 		},
