@@ -61,4 +61,57 @@ controller('MyCtrl1', ['$scope', 'HistoryService', '$timeout', function($scope, 
 			});
 		};
 	};
+
+	$timeout(function() {
+		var clicky;
+
+		$(document).mousedown(function(e) {
+			clicky = $(e.target);
+		});
+		$('.mybtn').css({
+			'display': 'none'
+		});
+		$('.myin').focus(function(event) {
+			$(event.target).parent().parent().parent().find('.mybtn').css({
+				'display': 'block'
+			});
+		});
+		$('.myin').blur(function(event) {
+			if(clicky[0] != $(event.target).parent().parent().parent().find('.mybtn')[0]) {
+				$(event.target).parent().parent().parent().find('.mybtn').css({
+					'display': 'none'
+				});
+			};
+		});
+		$(document).click(function(event) {
+			if($(event.target).hasClass('mybtn')) {
+				$('.mybtn').each(function(index) {
+					if($(event.target) != $(this)) {
+						$(this).css({
+							'display': 'none'
+						});
+					};
+				});
+			};
+			if($(event.target).hasClass('myin')) {
+				$('.mybtn').each(function(index) {
+					if($(event.target).parent().parent().parent().find('.mybtn')[0] != $(this)[0]) {
+						$(this).css({
+							'display': 'none'
+						});
+					};
+				});
+			};
+			if(!$(event.target).hasClass('mybtn') && !$(event.target).hasClass('myin')) {
+				$('.mybtn').css({
+					'display': 'none'
+				});
+			};
+		});
+	});
+
+	$scope.click = function(a) {
+		alert(a);
+	};
+
 }]);

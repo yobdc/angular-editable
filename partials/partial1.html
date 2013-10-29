@@ -3,46 +3,63 @@
 {{copy}}
 <hr>
 <div class="form-horizontal span12">
-	<div class="control-group line">
-		<label class="control-label">
-			Type
-		</label>
-		<edit2 class="controls" valid="true" out="contact.type.name" undoable="contact.type.code!=copy.type.code" undo="contact.type=copy.type">
-			<select ng-model="contact.type" ng-options="o.name for o in types">
-			</select>
-		</edit2>
-	</div>
-	<div class="control-group line" ng-repeat="email in contact.emails">
-		<label class="control-label">			
-			<select ng-model="email.type" ng-options="o.name for o in types" select-auto-wide='name'>
-			</select>
-		</label>
-		<edit2 class="controls" clear="removeEmail($index);" valid="!!email.name" out="email.name" undoable="contact.email!=copy.email" undo="contact.email=copy.email">
-			<input type="text" ng-model="email.name">
-		</edit2>
-	</div>
-	<div class="control-group">
-		<div class="controls">
-			<a ng-click="addEmail()">Add</a>
-		</div>
-	</div>
-	<div class="control-group line">
-		<label class="control-label">
-			Phone
-		</label>
-		<edit2 class="controls" clear="contact.phone=null;" valid="!!contact.phone" out="contact.phone" out="contact.phone" undoable="contact.phone!=copy.phone" undo="contact.phone=copy.phone">
-			<input type="text" ng-model="contact.phone">
-		</edit2>
-	</div>
-	<div id="my" class="control-group line">
-		<label class="control-label">
-			<select ng-model="contact.type" ng-options="o.name for o in types">
-			</select>
-		</label>
-		<edit2 class="controls" clear="clear()" valid="contact.address.address1||contact.address.address2||contact.address.address3" out="contact.address.address1+contact.address.address2+contact.address.address3" undoable="true" undo="copy2()">
-			<input type="text" ng-model="contact.address.address1">
-			<input type="text" ng-model="contact.address.address2">
-			<input type="text" ng-model="contact.address.address3">
-		</edit2>
-	</div>
+    <div class="control-group line">
+        <label class="control-label">
+            Type
+        </label>
+        <edit2 class="controls" valid="true" out="contact.type.name" undoable="contact.type.code!=copy.type.code"
+        undo="contact.type=copy.type">
+            <select ng-model="contact.type" ng-options="o.name for o in types">
+            </select>
+        </edit2>
+    </div>
+    <div class="control-group line" ng-repeat="email in contact.emails">
+        <label class="control-label">
+            <select ng-model="email.type" ng-options="o.name for o in types" select-auto-wide='name'>
+            </select>
+        </label>
+        <edit2 class="controls" clear="removeEmail($index);" valid="!!email.name"
+        out="email.name" undoable="contact.email!=copy.email" undo="contact.email=copy.email">
+            <input type="text" ng-model="email.name">
+        </edit2>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <a ng-click="addEmail()">Add</a>
+        </div>
+    </div>
+    <div class="control-group line">
+        <label class="control-label">
+            Phone
+        </label>
+        <edit2 class="controls" clear="contact.phone=null;" valid="!!contact.phone"
+        out="contact.phone" out="contact.phone" undoable="contact.phone!=copy.phone"
+        undo="contact.phone=copy.phone">
+            <input type="text" ng-model="contact.phone">
+        </edit2>
+    </div>
+    <div id="my" class="control-group line">
+        <label class="control-label">
+            <select ng-model="contact.type" ng-options="o.name for o in types">
+            </select>
+        </label>
+        <edit2 class="controls" clear="clear()" valid="contact.address.address1||contact.address.address2||contact.address.address3"
+        out="contact.address.address1+contact.address.address2+contact.address.address3"
+        undoable="true" undo="copy2()">
+            <input type="text" ng-model="contact.address.address1">
+            <input type="text" ng-model="contact.address.address2">
+            <input type="text" ng-model="contact.address.address3">
+        </edit2>
+    </div>
+    <div ng-repeat="a in [1,2,3]">
+        <div class="main" ng-repeat="o in [1,2,3]">
+            <div class="control-group line">
+                <input class="myin" type="text">
+            </div>
+        </div>
+        <button class="mybtn" ng-click="click($index)">
+            Click
+        </button>
+        <br>
+    </div>
 </div>
